@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (C) 2012 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<!--
+<HeadPhones>
+	<HeadPhone name="Earphone_Meizu_EP20_44k" uuid="12bde129-6b2b-41c6-bba9-c90a9c89709b" />
+	<HeadPhone name="Earphone_Meizu_EP20_48k" uuid="7a842cb7-dfdc-4d45-b215-e08f68b504da" />
+</HeadPhones>
+-->
+
+<HeadPhones>
+	<HeadPhone name="Earphone_Meizu_EP20_44k"
+		uuid="12bde129-6b2b-41c6-bba9-c90a9c89709b">
+	</HeadPhone>
+	<HeadPhone name="Earphone_Meizu_EP20_48k"
+		uuid="7a842cb7-dfdc-4d45-b215-e08f68b504da">
+	</HeadPhone>
+	<HeadPhone name="Earphone_Meizu_EP21_44k"
+		uuid="485cd944-6dda-49a6-9ce9-4c18e9a9be64">
+	</HeadPhone>
+	<HeadPhone name="Earphone_Meizu_EP21_48k"
+		uuid="f7fc0a0e-dafa-48a0-8b43-598db0c53f81">
+	</HeadPhone>
+	<HeadPhone name="Earphone_Meizu_EP20s_44k"
+		uuid="9ae5cb70-cdea-4250-8b5a-2e4beb45d070">
+	</HeadPhone>
+	<HeadPhone name="Earphone_Meizu_EP20s_48k"
+		uuid="20e130b6-b303-41a0-bbe4-fb07eb8184a1">
+	</HeadPhone>
+	<HeadPhone name="Earphone_AudioTechnica_ES7_44k"
+		uuid="180d6356-2df7-41b0-b404-8ec728234463">
+	</HeadPhone>
+	<HeadPhone name="Earphone_AudioTechnica_ES7_48k"
+		uuid="7ff7503e-bdcd-481f-ac33-ac6077eb8363">
+	</HeadPhone>
+	<HeadPhone name="Earphone_AudioTechnica_CKM500_44k"
+		uuid="67d424c7-fc2c-43f1-a417-6c66c54afdad">
+	</HeadPhone>
+	<HeadPhone name="Earphone_AudioTechnica_CKM500_48k"
+		uuid="bda047f0-2ae1-4628-b367-8adff0a19760">
+	</HeadPhone>
+	<HeadPhone name="Earphone_Sennheiser_CX200_44k"
+		uuid="44c83518-4168-4b26-9a4d-5410054632db">
+	</HeadPhone>
+	<HeadPhone name="Earphone_Sennheiser_CX200_48k"
+		uuid="c00a47b6-e474-47ca-b5a9-32a88164b471">
+	</HeadPhone>
+	<HeadPhone name="Earphone_Sennheiser_IE8i_44k"
+		uuid="75ad0edd-ee7f-47cb-b343-4bc7000ad759">
+	</HeadPhone>
+	<HeadPhone name="Earphone_Sennheiser_IE8i_48k"
+		uuid="d6613541-9873-4eb9-b25a-bc7d1f11ed52">
+	</HeadPhone>
+	<HeadPhone name="Earphone_Meizu_EP30_44k"
+		uuid="ccb478b4-0da4-496f-89f3-32800fead967">
+	</HeadPhone>
+	<HeadPhone name="Earphone_Meizu_EP30_48k"
+		uuid="af6d4fa4-db50-4bae-ac5a-9f470a8be939">
+	</HeadPhone>
+	<HeadPhone name="Earphone_Meizu_EP40_44k"
+		uuid="9dab4b7b-95ac-47c0-b431-8b1e99111073">
+	</HeadPhone>
+	<HeadPhone name="Earphone_Meizu_EP40_48k"
+		uuid="819e8697-3177-4cf8-839f-4fcef5dab0ba">
+	</HeadPhone>
+	<HeadPhone name="Earphone_Apple_Earpod_44k"
+		uuid="7105ba8b-fef6-4e22-a4eb-4e3ab590ff0c">
+	</HeadPhone>
+	<HeadPhone name="Earphone_Apple_Earpod_48k"
+		uuid="5956df5c-c9f8-433a-a4be-607b84f8f2a0">
+	</HeadPhone>
+</HeadPhones>

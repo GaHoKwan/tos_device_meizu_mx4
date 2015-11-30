@@ -1,0 +1,14 @@
+ro.qrom.beaconkey=0M000V5PH01B6QQD
+ro.qrom.product.device=mx4
+ro.qrom.product.device.brand=mx4
+ro.qrom.build.brand=tos_luo2888
+ro.qrom.build.os=android4.4.2
+ro.qrom.build.version.number=01151201
+ro.qrom.build.version.name=ADRQRTOS01_B
+ro.qrom.build.version.snflag=ADRQRTOS
+ro.qrom.build.version.snver=01
+ro.qrom.build.version.day=151201
+ro.qrom.build.version.type=B
+ro.qrom.otapath=/storage/sdcard0
+qrom_disposeIcon_enable=1
+qrom_permission_enable=1
