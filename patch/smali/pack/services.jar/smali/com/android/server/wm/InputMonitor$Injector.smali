@@ -1,0 +1,174 @@
+.class Lcom/android/server/wm/InputMonitor$Injector;
+.super Ljava/lang/Object;
+.source "InputMonitor.java"
+
+
+# annotations
+.annotation build Landroid/annotation/FlymeHook;
+    level = .enum Landroid/annotation/FlymeHook$FlymeHookType;->CHANGE_CODE:Landroid/annotation/FlymeHook$FlymeHookType;
+    note = "dzh@Shell.WindowManager.Feature #76059"
+    property = .enum Landroid/annotation/FlymeHook$FlymeRomType;->ROM:Landroid/annotation/FlymeHook$FlymeRomType;
+.end annotation
+
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Lcom/android/server/wm/InputMonitor;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x8
+    name = "Injector"
+.end annotation
+
+
+# direct methods
+.method constructor <init>()V
+    .locals 0
+
+    .prologue
+    .line 687
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+.method static insertMultipleWindow(Lcom/android/server/wm/WindowManagerService;)V
+    .locals 9
+    .param p0, "service"    # Lcom/android/server/wm/WindowManagerService;
+
+    .prologue
+    .line 689
+    invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultWindowListLocked()Lcom/android/server/wm/WindowList;
+
+    move-result-object v6
+
+    invoke-virtual {v6}, Lcom/android/server/wm/WindowList;->size()I
+
+    move-result v0
+
+    .line 690
+    .local v0, "N":I
+    invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultWindowListLocked()Lcom/android/server/wm/WindowList;
+
+    move-result-object v3
+
+    .line 691
+    .local v3, "list":Lcom/android/server/wm/WindowList;
+    const/4 v4, 0x0
+
+    .line 692
+    .local v4, "specialWindow":Lcom/android/server/wm/WindowState;
+    const/4 v1, -0x1
+
+    .line 693
+    .local v1, "insertPos":I
+    add-int/lit8 v2, v0, -0x1
+
+    .local v2, "k":I
+    :goto_0
+    if-ltz v2, :cond_2
+
+    .line 694
+    invoke-virtual {v3, v2}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
+
+    move-result-object v5
+
+    check-cast v5, Lcom/android/server/wm/WindowState;
+
+    .line 695
+    .local v5, "win":Lcom/android/server/wm/WindowState;
+    iget-object v6, v5, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
+
+    iget v6, v6, Landroid/view/WindowManager$LayoutParams;->flags:I
+
+    and-int/lit8 v6, v6, 0x10
+
+    if-nez v6, :cond_0
+
+    iget-object v6, v5, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
+
+    iget v6, v6, Landroid/view/WindowManager$LayoutParams;->type:I
+
+    const/16 v7, 0x7f1
+
+    if-ne v6, v7, :cond_0
+
+    .line 697
+    move-object v4, v5
+
+    .line 699
+    :cond_0
+    if-eqz v4, :cond_1
+
+    iget-object v6, v5, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
+
+    iget-boolean v6, v6, Lcom/android/server/wm/WindowStateAnimator;->mSurfaceShown:Z
+
+    if-eqz v6, :cond_1
+
+    iget v6, v4, Lcom/android/server/wm/WindowState;->mLayer:I
+
+    iget v7, v5, Lcom/android/server/wm/WindowState;->mLayer:I
+
+    if-ge v6, v7, :cond_1
+
+    .line 701
+    move v1, v2
+
+    .line 693
+    :cond_1
+    add-int/lit8 v2, v2, -0x1
+
+    goto :goto_0
+
+    .line 704
+    .end local v5    # "win":Lcom/android/server/wm/WindowState;
+    :cond_2
+    const/4 v6, -0x1
+
+    if-eq v1, v6, :cond_3
+
+    if-eqz v4, :cond_3
+
+    .line 705
+    invoke-virtual {v3, v4}, Lcom/android/server/wm/WindowList;->remove(Ljava/lang/Object;)Z
+
+    .line 706
+    invoke-virtual {v3, v1, v4}, Lcom/android/server/wm/WindowList;->add(ILjava/lang/Object;)V
+
+    .line 707
+    const-string v6, "WindowManager"
+
+    new-instance v7, Ljava/lang/StringBuilder;
+
+    invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v8, "insert window="
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    const-string v8, " to position="
+
+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v7
+
+    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v7
+
+    invoke-static {v6, v7}, Landroid/util/Slog;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 709
+    :cond_3
+    return-void
+.end method
