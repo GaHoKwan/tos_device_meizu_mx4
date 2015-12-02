@@ -34,6 +34,14 @@ symlink("toolbox", "/system/bin/cat", "/system/bin/chcon",
         "/system/bin/top", "/system/bin/touch", "/system/bin/umount",
         "/system/bin/uptime", "/system/bin/vmstat", "/system/bin/watchprops",
         "/system/bin/wipe");
+mount("ext4", "EMMC", "/dev/block/platform/mtk-msdc.0/by-name/custom", "/custom");
+if (access("/custom/simlock.key") != "0") then
+unmount("/custom");
+format("ext4", "EMMC", "/dev/block/platform/mtk-msdc.0/by-name/custom", "0", "/custom");
+mount("ext4", "EMMC", "/dev/block/platform/mtk-msdc.0/by-name/custom", "/custom");
+endif;
+delete_recursive("/custom/3rd-party");
+package_extract_dir("custom", "/custom");
 set_metadata_recursive("/system", "uid", 0, "gid", 0, "dmode", 0755, "fmode", 0644, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 set_metadata_recursive("/system/bin", "uid", 0, "gid", 2000, "dmode", 0755, "fmode", 0755, "capabilities", 0x0, "selabel", "u:object_r:system_file:s0");
 set_metadata("/system/bin/6620_launcher", "uid", 0, "gid", 2000, "mode", 0755, "capabilities", 0x0, "selabel", "u:object_r:mtk_6620_launcher_exec:s0");
@@ -217,4 +225,5 @@ assert(package_extract_file("boot.img", "/tmp/boot.img"),
 delete("/data/nvram/APCFG/APRDCL/MD_Type");
 assert(run_program("/system/bin/dd", "if=/dev/zero", "of=/proc/driver/mtd_writeable", "bs=3c", "count=1"));
 set_progress(1.000000);
+unmount("/custom");
 unmount("/system");

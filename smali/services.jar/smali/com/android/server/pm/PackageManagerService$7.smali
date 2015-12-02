@@ -57,7 +57,7 @@
 
 # virtual methods
 .method public run()V
-    .locals 6
+    .locals 7
 
     .prologue
     .line 9983
@@ -70,7 +70,7 @@
     .line 9987
     const/4 v1, 0x0
 
-    .line 9991
+    .line 9989
     .local v1, "returnCode":I
     iget-object v2, p0, Lcom/android/server/pm/PackageManagerService$7;->this$0:Lcom/android/server/pm/PackageManagerService;
 
@@ -78,10 +78,12 @@
 
     iget v4, p0, Lcom/android/server/pm/PackageManagerService$7;->val$userId:I
 
-    iget v5, p0, Lcom/android/server/pm/PackageManagerService$7;->val$flags:I
+    iget v5, p0, Lcom/android/server/pm/PackageManagerService$7;->val$uid:I
 
-    # invokes: Lcom/android/server/pm/PackageManagerService;->deletePackageX(Ljava/lang/String;II)I
-    invoke-static {v2, v3, v4, v5}, Lcom/android/server/pm/PackageManagerService;->access$5200(Lcom/android/server/pm/PackageManagerService;Ljava/lang/String;II)I
+    iget v6, p0, Lcom/android/server/pm/PackageManagerService$7;->val$flags:I
+
+    # invokes: Lcom/android/server/pm/PackageManagerService;->deletePackageX(Ljava/lang/String;III)I
+    invoke-static {v2, v3, v4, v5, v6}, Lcom/android/server/pm/PackageManagerService;->access$5200(Lcom/android/server/pm/PackageManagerService;Ljava/lang/String;III)I
 
     move-result v1
 

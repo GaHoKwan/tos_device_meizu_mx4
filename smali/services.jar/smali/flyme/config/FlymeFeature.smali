@@ -94,7 +94,7 @@
 
 .field public static final USE_GESTURE:Z = true
 
-.field public static final YUNOS_PROJECT:Z
+.field public static final YUNOS_PROJECT:Z = true
 
 
 # direct methods

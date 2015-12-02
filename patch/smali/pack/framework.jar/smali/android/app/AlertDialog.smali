@@ -141,7 +141,6 @@
     invoke-virtual {v0, v1}, Lcom/android/internal/app/AlertController;->setEllipsize(Landroid/text/TextUtils$TruncateAt;)V
 
     .line 156
-invoke-virtual/range {p0 .. p1}, Landroid/app/AlertDialog;->tos_AlertDialog_init(Landroid/content/Context;)V
     return-void
 .end method
 
@@ -196,7 +195,6 @@ invoke-virtual/range {p0 .. p1}, Landroid/app/AlertDialog;->tos_AlertDialog_init
     invoke-virtual {v0, v1}, Lcom/android/internal/app/AlertController;->setEllipsize(Landroid/text/TextUtils$TruncateAt;)V
 
     .line 173
-invoke-virtual/range {p0 .. p1}, Landroid/app/AlertDialog;->tos_AlertDialog_init(Landroid/content/Context;)V
     return-void
 .end method
 
@@ -222,7 +220,7 @@ invoke-virtual/range {p0 .. p1}, Landroid/app/AlertDialog;->tos_AlertDialog_init
     return-object p0
 .end method
 
-.method static tos_org_resolveDialogTheme(Landroid/content/Context;I)I
+.method static resolveDialogTheme(Landroid/content/Context;I)I
     .locals 4
     .param p0, "context"    # Landroid/content/Context;
     .param p1, "resid"    # I
@@ -1056,132 +1054,5 @@ invoke-virtual/range {p0 .. p1}, Landroid/app/AlertDialog;->tos_AlertDialog_init
     invoke-super {p0}, Landroid/app/Dialog;->show()V
 
     .line 1368
-    return-void
-.end method
-
-.method static resolveDialogTheme(Landroid/content/Context;I)I
-    .locals 4
-    .param p0, "context"    # Landroid/content/Context;
-    .param p1, "resid"    # I
-    .annotation build Landroid/annotation/TOSHook;
-        hooktype = .enum Landroid/annotation/TOSHook$TOSHookType;->CHANGE_METHOD:Landroid/annotation/TOSHook$TOSHookType;
-        note = "QROM: framework xposed rebuild ::stafensong::20150526"
-        romtype = .enum Landroid/annotation/TOSHook$TOSRomType;->ROM:Landroid/annotation/TOSHook$TOSRomType;
-    .end annotation
-
-    .prologue
-    const/4 v3, 0x1
-
-    .line 161
-    new-instance v0, Lcom/android/internal/os/TosPlugMethod$MethodPlugParam;
-
-    invoke-direct {v0}, Lcom/android/internal/os/TosPlugMethod$MethodPlugParam;-><init>()V
-
-    .line 162
-    .local v0, "param":Lcom/android/internal/os/TosPlugMethod$MethodPlugParam;
-    iput v3, v0, Lcom/android/internal/os/TosPlugMethod$MethodPlugParam;->invokeType:I
-
-    .line 163
-    const/4 v1, 0x2
-
-    new-array v1, v1, [Ljava/lang/Object;
-
-    iput-object v1, v0, Lcom/android/internal/os/TosPlugMethod$MethodPlugParam;->args:[Ljava/lang/Object;
-
-    .line 164
-    iget-object v1, v0, Lcom/android/internal/os/TosPlugMethod$MethodPlugParam;->args:[Ljava/lang/Object;
-
-    const/4 v2, 0x0
-
-    aput-object p0, v1, v2
-
-    .line 165
-    iget-object v1, v0, Lcom/android/internal/os/TosPlugMethod$MethodPlugParam;->args:[Ljava/lang/Object;
-
-    invoke-static {p1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
-
-    move-result-object v2
-
-    aput-object v2, v1, v3
-
-    .line 166
-    const-string v1, "android.app.AlertDialog#resolveDialogTheme"
-
-    invoke-static {v1, v0}, Lcom/android/internal/os/TosModulesLoader;->invoke(Ljava/lang/String;Lcom/android/internal/os/TosPlugMethod$MethodPlugParam;)V
-
-    .line 168
-    invoke-virtual {v0}, Lcom/android/internal/os/TosPlugMethod$MethodPlugParam;->returnEarly()Z
-
-    move-result v1
-
-    if-eqz v1, :cond_0
-
-    .line 169
-    invoke-virtual {v0}, Lcom/android/internal/os/TosPlugMethod$MethodPlugParam;->getResult()Ljava/lang/Object;
-
-    move-result-object v1
-
-    check-cast v1, Ljava/lang/Integer;
-
-    invoke-virtual {v1}, Ljava/lang/Integer;->intValue()I
-
-    move-result v1
-
-    .line 172
-    :goto_0
-    return v1
-
-    :cond_0
-    invoke-static {p0, p1}, Landroid/app/AlertDialog;->tos_org_resolveDialogTheme(Landroid/content/Context;I)I
-
-    move-result v1
-
-    goto :goto_0
-.end method
-
-.method tos_AlertDialog_init(Landroid/content/Context;)V
-    .locals 3
-    .param p1, "context"    # Landroid/content/Context;
-    .annotation build Landroid/annotation/TOSHook;
-        hooktype = .enum Landroid/annotation/TOSHook$TOSHookType;->NEW_METHOD:Landroid/annotation/TOSHook$TOSHookType;
-        note = "QROM: framework xposed rebuild ::stafensong::20150526"
-        romtype = .enum Landroid/annotation/TOSHook$TOSRomType;->ROM:Landroid/annotation/TOSHook$TOSRomType;
-    .end annotation
-
-    .prologue
-    .line 148
-    new-instance v0, Lcom/android/internal/os/TosPlugMethod$MethodPlugParam;
-
-    invoke-direct {v0}, Lcom/android/internal/os/TosPlugMethod$MethodPlugParam;-><init>()V
-
-    .line 149
-    .local v0, "param":Lcom/android/internal/os/TosPlugMethod$MethodPlugParam;
-    const/4 v1, 0x2
-
-    iput v1, v0, Lcom/android/internal/os/TosPlugMethod$MethodPlugParam;->invokeType:I
-
-    .line 150
-    iput-object p0, v0, Lcom/android/internal/os/TosPlugMethod$MethodPlugParam;->thisObject:Ljava/lang/Object;
-
-    .line 151
-    const/4 v1, 0x1
-
-    new-array v1, v1, [Ljava/lang/Object;
-
-    iput-object v1, v0, Lcom/android/internal/os/TosPlugMethod$MethodPlugParam;->args:[Ljava/lang/Object;
-
-    .line 152
-    iget-object v1, v0, Lcom/android/internal/os/TosPlugMethod$MethodPlugParam;->args:[Ljava/lang/Object;
-
-    const/4 v2, 0x0
-
-    aput-object p1, v1, v2
-
-    .line 153
-    const-string v1, "android.app.AlertDialog#AlertDialog"
-
-    invoke-static {v1, v0}, Lcom/android/internal/os/TosModulesLoader;->invoke(Ljava/lang/String;Lcom/android/internal/os/TosPlugMethod$MethodPlugParam;)V
-
-    .line 154
     return-void
 .end method

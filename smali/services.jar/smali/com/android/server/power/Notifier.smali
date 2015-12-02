@@ -526,17 +526,17 @@
 .end method
 
 .method private sendGoToSleepBroadcast(I)V
-    .locals 10
+    .locals 13
     .param p1, "reason"    # I
 
     .prologue
-    const/4 v7, 0x3
-
-    const/4 v5, 0x2
+    const/4 v4, 0x3
 
     const/4 v3, 0x0
 
-    const/4 v4, 0x1
+    const/4 v12, 0x2
+
+    const/4 v11, 0x1
 
     const/4 v6, 0x0
 
@@ -548,10 +548,10 @@
     invoke-static {v0, v1}, Landroid/util/Slog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     .line 559
-    const/4 v9, 0x2
+    const/4 v10, 0x2
 
     .line 560
-    .local v9, "why":I
+    .local v10, "why":I
     packed-switch p1, :pswitch_data_0
 
     .line 572
@@ -568,30 +568,30 @@
 
     aput-object v2, v1, v6
 
-    invoke-static {v9}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static {v10}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v2
+
+    aput-object v2, v1, v11
+
+    invoke-static {v6}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v2
+
+    aput-object v2, v1, v12
+
+    invoke-static {v6}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
     move-result-object v2
 
     aput-object v2, v1, v4
-
-    invoke-static {v6}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
-
-    move-result-object v2
-
-    aput-object v2, v1, v5
-
-    invoke-static {v6}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
-
-    move-result-object v2
-
-    aput-object v2, v1, v7
 
     invoke-static {v0, v1}, Landroid/util/EventLog;->writeEvent(I[Ljava/lang/Object;)I
 
     .line 574
     iget-object v0, p0, Lcom/android/server/power/Notifier;->mPolicy:Landroid/view/WindowManagerPolicy;
 
-    invoke-interface {v0, v9}, Landroid/view/WindowManagerPolicy;->screenTurnedOff(I)V
+    invoke-interface {v0, v10}, Landroid/view/WindowManagerPolicy;->screenTurnedOff(I)V
 
     .line 577
     const-string v0, "PowerManagerNotifier"
@@ -609,7 +609,7 @@
     invoke-interface {v0}, Landroid/app/IActivityManager;->goingToSleep()V
 
     .line 584
-    invoke-direct {p0, v9}, Lcom/android/server/power/Notifier;->notifyAccessControlGotoSleep(I)V
+    invoke-direct {p0, v10}, Lcom/android/server/power/Notifier;->notifyAccessControlGotoSleep(I)V
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
@@ -645,27 +645,44 @@
 
     invoke-virtual/range {v0 .. v8}, Landroid/content/Context;->sendOrderedBroadcastAsUser(Landroid/content/Intent;Landroid/os/UserHandle;Ljava/lang/String;Landroid/content/BroadcastReceiver;Landroid/os/Handler;ILjava/lang/String;Landroid/os/Bundle;)V
 
+    .line 600
+    iget-object v0, p0, Lcom/android/server/power/Notifier;->mHandler:Lcom/android/server/power/Notifier$NotifierHandler;
+
+    invoke-virtual {v0, v12}, Lcom/android/server/power/Notifier$NotifierHandler;->obtainMessage(I)Landroid/os/Message;
+
+    move-result-object v9
+
+    .line 601
+    .local v9, "msg":Landroid/os/Message;
+    invoke-virtual {v9, v11}, Landroid/os/Message;->setAsynchronous(Z)V
+
+    .line 602
+    iget-object v0, p0, Lcom/android/server/power/Notifier;->mHandler:Lcom/android/server/power/Notifier$NotifierHandler;
+
+    invoke-virtual {v0, v9}, Lcom/android/server/power/Notifier$NotifierHandler;->sendMessage(Landroid/os/Message;)Z
+
     .line 609
+    .end local v9    # "msg":Landroid/os/Message;
     :goto_2
     return-void
 
     .line 562
     :pswitch_0
-    const/4 v9, 0x1
+    const/4 v10, 0x1
 
     .line 563
     goto :goto_0
 
     .line 565
     :pswitch_1
-    const/4 v9, 0x3
+    const/4 v10, 0x3
 
     .line 566
     goto :goto_0
 
     .line 568
     :pswitch_2
-    const/4 v9, 0x4
+    const/4 v10, 0x4
 
     goto :goto_0
 
@@ -673,19 +690,19 @@
     :cond_0
     const/16 v0, 0xaa7
 
-    new-array v1, v5, [Ljava/lang/Object;
-
-    invoke-static {v7}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
-
-    move-result-object v2
-
-    aput-object v2, v1, v6
+    new-array v1, v12, [Ljava/lang/Object;
 
     invoke-static {v4}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
     move-result-object v2
 
-    aput-object v2, v1, v4
+    aput-object v2, v1, v6
+
+    invoke-static {v11}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    move-result-object v2
+
+    aput-object v2, v1, v11
 
     invoke-static {v0, v1}, Landroid/util/EventLog;->writeEvent(I[Ljava/lang/Object;)I
 
@@ -979,14 +996,14 @@
 .end method
 
 .method private sendWakeUpBroadcast()V
-    .locals 9
+    .locals 12
 
     .prologue
     const/4 v3, 0x0
 
-    const/4 v7, 0x2
+    const/4 v11, 0x2
 
-    const/4 v5, 0x1
+    const/4 v10, 0x1
 
     const/4 v6, 0x0
 
@@ -1004,7 +1021,7 @@
 
     new-array v1, v1, [Ljava/lang/Object;
 
-    invoke-static {v5}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static {v10}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
     move-result-object v2
 
@@ -1014,13 +1031,13 @@
 
     move-result-object v2
 
-    aput-object v2, v1, v5
+    aput-object v2, v1, v10
 
     invoke-static {v6}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
     move-result-object v2
 
-    aput-object v2, v1, v7
+    aput-object v2, v1, v11
 
     const/4 v2, 0x3
 
@@ -1091,7 +1108,24 @@
 
     invoke-virtual/range {v0 .. v8}, Landroid/content/Context;->sendOrderedBroadcastAsUser(Landroid/content/Intent;Landroid/os/UserHandle;Ljava/lang/String;Landroid/content/BroadcastReceiver;Landroid/os/Handler;ILjava/lang/String;Landroid/os/Bundle;)V
 
+    .line 507
+    iget-object v0, p0, Lcom/android/server/power/Notifier;->mHandler:Lcom/android/server/power/Notifier$NotifierHandler;
+
+    invoke-virtual {v0, v11}, Lcom/android/server/power/Notifier$NotifierHandler;->obtainMessage(I)Landroid/os/Message;
+
+    move-result-object v9
+
+    .line 508
+    .local v9, "msg":Landroid/os/Message;
+    invoke-virtual {v9, v10}, Landroid/os/Message;->setAsynchronous(Z)V
+
+    .line 509
+    iget-object v0, p0, Lcom/android/server/power/Notifier;->mHandler:Lcom/android/server/power/Notifier$NotifierHandler;
+
+    invoke-virtual {v0, v9}, Lcom/android/server/power/Notifier$NotifierHandler;->sendMessage(Landroid/os/Message;)Z
+
     .line 516
+    .end local v9    # "msg":Landroid/os/Message;
     :goto_1
     return-void
 
@@ -1099,19 +1133,19 @@
     :cond_0
     const/16 v0, 0xaa7
 
-    new-array v1, v7, [Ljava/lang/Object;
+    new-array v1, v11, [Ljava/lang/Object;
 
-    invoke-static {v7}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static {v11}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
     move-result-object v2
 
     aput-object v2, v1, v6
 
-    invoke-static {v5}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+    invoke-static {v10}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
 
     move-result-object v2
 
-    aput-object v2, v1, v5
+    aput-object v2, v1, v10
 
     invoke-static {v0, v1}, Landroid/util/EventLog;->writeEvent(I[Ljava/lang/Object;)I
 

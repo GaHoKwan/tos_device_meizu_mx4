@@ -1566,8 +1566,43 @@
 
     throw v4
 
-    .line 569
+    .line 558
     :cond_0
+    sget-object v4, Ljava/lang/System;->out:Ljava/io/PrintStream;
+
+    const-string v5, "entering AbstractHttpClient::execute:allowSendMMS"
+
+    invoke-virtual {v4, v5}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V
+
+    .line 559
+    move-object/from16 v0, p0
+
+    move-object/from16 v1, p2
+
+    invoke-direct {v0, v1}, Lorg/apache/http/impl/client/AbstractHttpClient;->allowSendMMS(Lorg/apache/http/HttpRequest;)Z
+
+    move-result v4
+
+    if-nez v4, :cond_1
+
+    .line 560
+    sget-object v4, Ljava/lang/System;->out:Ljava/io/PrintStream;
+
+    const-string v5, "AbstractHttpClient::execute:allowSendMMS--false"
+
+    invoke-virtual {v4, v5}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V
+
+    .line 561
+    new-instance v4, Lorg/apache/http/client/ClientProtocolException;
+
+    const-string v5, "not allow to send MMS."
+
+    invoke-direct {v4, v5}, Lorg/apache/http/client/ClientProtocolException;-><init>(Ljava/lang/String;)V
+
+    throw v4
+
+    .line 569
+    :cond_1
     const/16 v19, 0x0
 
     .line 570
@@ -1586,7 +1621,7 @@
 
     .line 577
     .local v17, "defaultContext":Lorg/apache/http/protocol/HttpContext;
-    if-nez p3, :cond_1
+    if-nez p3, :cond_2
 
     .line 578
     move-object/from16 v19, v17
@@ -1664,7 +1699,7 @@
     :try_start_1
     sget-object v4, Lorg/apache/http/impl/client/AbstractHttpClient;->mCheckHandler:Lorg/apache/http/client/HttpRequestCheckHandler;
 
-    if-eqz v4, :cond_2
+    if-eqz v4, :cond_3
 
     move-object/from16 v0, p0
 
@@ -1674,7 +1709,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_2
+    if-eqz v4, :cond_3
 
     sget-object v4, Lorg/apache/http/impl/client/AbstractHttpClient;->mCheckHandler:Lorg/apache/http/client/HttpRequestCheckHandler;
 
@@ -1684,7 +1719,7 @@
 
     move-result v4
 
-    if-nez v4, :cond_2
+    if-nez v4, :cond_3
 
     .line 602
     sget-object v4, Ljava/lang/System;->out:Ljava/io/PrintStream;
@@ -1705,7 +1740,7 @@
     return-object v4
 
     .line 580
-    :cond_1
+    :cond_2
     :try_start_2
     new-instance v20, Lorg/apache/http/protocol/DefaultedHttpContext;
 
@@ -1738,7 +1773,7 @@
 
     .line 607
     .restart local v17    # "defaultContext":Lorg/apache/http/protocol/HttpContext;
-    :cond_2
+    :cond_3
     :try_start_3
     move-object/from16 v0, v18
 

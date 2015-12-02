@@ -50,7 +50,7 @@
 
 # direct methods
 .method public constructor <init>(IJJJJJLandroid/app/PendingIntent;Landroid/os/WorkSource;)V
-    .locals 1
+    .locals 2
     .param p1, "_type"    # I
     .param p2, "_when"    # J
     .param p4, "_whenElapsed"    # J
@@ -92,6 +92,36 @@
 
     .line 1709
     iput-object p13, p0, Lcom/android/server/AlarmManagerService$Alarm;->workSource:Landroid/os/WorkSource;
+
+    .line 1715
+    iget-wide v0, p0, Lcom/android/server/AlarmManagerService$Alarm;->whenElapsed:J
+
+    iput-wide v0, p0, Lcom/android/server/AlarmManagerService$Alarm;->whenOriginal:J
+
+    .line 1716
+    iget-wide v0, p0, Lcom/android/server/AlarmManagerService$Alarm;->whenElapsed:J
+
+    iput-wide v0, p0, Lcom/android/server/AlarmManagerService$Alarm;->whenPwSav:J
+
+    .line 1717
+    iget-wide v0, p0, Lcom/android/server/AlarmManagerService$Alarm;->maxWhen:J
+
+    iput-wide v0, p0, Lcom/android/server/AlarmManagerService$Alarm;->maxWhenOriginal:J
+
+    .line 1718
+    iget-wide v0, p0, Lcom/android/server/AlarmManagerService$Alarm;->maxWhen:J
+
+    iput-wide v0, p0, Lcom/android/server/AlarmManagerService$Alarm;->maxWhenPwsav:J
+
+    .line 1719
+    const/4 v0, 0x0
+
+    iput-boolean v0, p0, Lcom/android/server/AlarmManagerService$Alarm;->bPwSav:Z
+
+    .line 1720
+    const/4 v0, 0x0
+
+    iput v0, p0, Lcom/android/server/AlarmManagerService$Alarm;->psl:I
 
     .line 1723
     return-void
@@ -408,7 +438,7 @@
 .end method
 
 .method public toString()Ljava/lang/String;
-    .locals 2
+    .locals 3
 
     .prologue
     .line 1728
@@ -458,6 +488,86 @@
     move-result-object v1
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 1740
+    const-string v1, " when="
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 1741
+    iget-wide v1, p0, Lcom/android/server/AlarmManagerService$Alarm;->when:J
+
+    invoke-virtual {v0, v1, v2}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+
+    .line 1742
+    const-string v1, " maxWhen="
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 1743
+    iget-wide v1, p0, Lcom/android/server/AlarmManagerService$Alarm;->maxWhen:J
+
+    invoke-virtual {v0, v1, v2}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+
+    .line 1744
+    const-string v1, " whenElapsed="
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 1745
+    iget-wide v1, p0, Lcom/android/server/AlarmManagerService$Alarm;->whenElapsed:J
+
+    invoke-virtual {v0, v1, v2}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+
+    .line 1746
+    const-string v1, " whenOriginal="
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 1747
+    iget-wide v1, p0, Lcom/android/server/AlarmManagerService$Alarm;->whenOriginal:J
+
+    invoke-virtual {v0, v1, v2}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+
+    .line 1748
+    const-string v1, " whenPwSav="
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 1749
+    iget-wide v1, p0, Lcom/android/server/AlarmManagerService$Alarm;->whenPwSav:J
+
+    invoke-virtual {v0, v1, v2}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+
+    .line 1750
+    const-string v1, " maxWhenOriginal="
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 1751
+    iget-wide v1, p0, Lcom/android/server/AlarmManagerService$Alarm;->maxWhenOriginal:J
+
+    invoke-virtual {v0, v1, v2}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+
+    .line 1752
+    const-string v1, " maxWhenPwsav="
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 1753
+    iget-wide v1, p0, Lcom/android/server/AlarmManagerService$Alarm;->maxWhenPwsav:J
+
+    invoke-virtual {v0, v1, v2}, Ljava/lang/StringBuilder;->append(J)Ljava/lang/StringBuilder;
+
+    .line 1754
+    const-string v1, " bPwSav="
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 1755
+    iget-boolean v1, p0, Lcom/android/server/AlarmManagerService$Alarm;->bPwSav:Z
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
 
     .line 1758
     const/16 v1, 0x7d

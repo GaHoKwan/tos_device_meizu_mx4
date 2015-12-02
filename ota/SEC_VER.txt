@@ -1,0 +1,6 @@
+custom_name = MEIZU
+boot = 1
+recovery = 1
+system = 1
+logo = 1
+lk = 1

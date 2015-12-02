@@ -58,7 +58,7 @@
     iget-object v1, p0, Lcom/android/server/AlarmManagerService$PowerSavingContentObserver;->this$0:Lcom/android/server/AlarmManagerService;
 
     # getter for: Lcom/android/server/AlarmManagerService;->mPwsavEnable:Z
-    invoke-static {v1}, Lcom/android/server/AlarmManagerService;->access$2900(Lcom/android/server/AlarmManagerService;)Z
+    invoke-static {v1}, Lcom/android/server/AlarmManagerService;->access$3600(Lcom/android/server/AlarmManagerService;)Z
 
     move-result v1
 
@@ -75,7 +75,7 @@
     iget-object v1, p0, Lcom/android/server/AlarmManagerService$PowerSavingContentObserver;->this$0:Lcom/android/server/AlarmManagerService;
 
     # getter for: Lcom/android/server/AlarmManagerService;->mBlackListInited:Z
-    invoke-static {v1}, Lcom/android/server/AlarmManagerService;->access$3000(Lcom/android/server/AlarmManagerService;)Z
+    invoke-static {v1}, Lcom/android/server/AlarmManagerService;->access$3700(Lcom/android/server/AlarmManagerService;)Z
 
     move-result v1
 
@@ -94,7 +94,7 @@
     iget-object v0, p0, Lcom/android/server/AlarmManagerService$PowerSavingContentObserver;->this$0:Lcom/android/server/AlarmManagerService;
 
     # getter for: Lcom/android/server/AlarmManagerService;->mPwsavEnable:Z
-    invoke-static {v0}, Lcom/android/server/AlarmManagerService;->access$2900(Lcom/android/server/AlarmManagerService;)Z
+    invoke-static {v0}, Lcom/android/server/AlarmManagerService;->access$3600(Lcom/android/server/AlarmManagerService;)Z
 
     move-result v0
 
@@ -104,7 +104,7 @@
     iget-object v0, p0, Lcom/android/server/AlarmManagerService$PowerSavingContentObserver;->this$0:Lcom/android/server/AlarmManagerService;
 
     # invokes: Lcom/android/server/AlarmManagerService;->getBlackListFromDb()Z
-    invoke-static {v0}, Lcom/android/server/AlarmManagerService;->access$3100(Lcom/android/server/AlarmManagerService;)Z
+    invoke-static {v0}, Lcom/android/server/AlarmManagerService;->access$3800(Lcom/android/server/AlarmManagerService;)Z
 
     move-result v0
 
@@ -114,7 +114,7 @@
     iget-object v0, p0, Lcom/android/server/AlarmManagerService$PowerSavingContentObserver;->this$0:Lcom/android/server/AlarmManagerService;
 
     # invokes: Lcom/android/server/AlarmManagerService;->initBlackListConfig()Z
-    invoke-static {v0}, Lcom/android/server/AlarmManagerService;->access$3200(Lcom/android/server/AlarmManagerService;)Z
+    invoke-static {v0}, Lcom/android/server/AlarmManagerService;->access$3900(Lcom/android/server/AlarmManagerService;)Z
 
     .line 3280
     :cond_0
@@ -126,7 +126,7 @@
     iget-object v0, p0, Lcom/android/server/AlarmManagerService$PowerSavingContentObserver;->this$0:Lcom/android/server/AlarmManagerService;
 
     # getter for: Lcom/android/server/AlarmManagerService;->mBlackListInited:Z
-    invoke-static {v0}, Lcom/android/server/AlarmManagerService;->access$3000(Lcom/android/server/AlarmManagerService;)Z
+    invoke-static {v0}, Lcom/android/server/AlarmManagerService;->access$3700(Lcom/android/server/AlarmManagerService;)Z
 
     move-result v0
 
@@ -138,7 +138,7 @@
     const/4 v1, 0x0
 
     # setter for: Lcom/android/server/AlarmManagerService;->mBlackListInited:Z
-    invoke-static {v0, v1}, Lcom/android/server/AlarmManagerService;->access$3002(Lcom/android/server/AlarmManagerService;Z)Z
+    invoke-static {v0, v1}, Lcom/android/server/AlarmManagerService;->access$3702(Lcom/android/server/AlarmManagerService;Z)Z
 
     goto :goto_0
 .end method

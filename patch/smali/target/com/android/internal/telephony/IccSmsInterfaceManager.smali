@@ -5422,7 +5422,7 @@
 .end method
 
 .method public sendData(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I[BLandroid/app/PendingIntent;Landroid/app/PendingIntent;)V
-    .locals 8
+    .locals 10
     .param p1, "callingPackage"    # Ljava/lang/String;
     .param p2, "destAddr"    # Ljava/lang/String;
     .param p3, "scAddr"    # Ljava/lang/String;
@@ -5432,181 +5432,229 @@
     .param p7, "deliveryIntent"    # Landroid/app/PendingIntent;
 
     .prologue
-    const/16 v3, 0x14
-
     .line 715
-    iget-object v0, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mPhone:Lcom/android/internal/telephony/PhoneBase;
+    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mPhone:Lcom/android/internal/telephony/PhoneBase;
 
-    invoke-virtual {v0}, Lcom/android/internal/telephony/PhoneBase;->getContext()Landroid/content/Context;
+    invoke-virtual {v1}, Lcom/android/internal/telephony/PhoneBase;->getContext()Landroid/content/Context;
 
-    move-result-object v0
+    move-result-object v1
 
-    const-string v1, "android.permission.SEND_SMS"
+    const-string v2, "android.permission.SEND_SMS"
 
-    const-string v2, "Sending SMS message"
+    const-string v3, "Sending SMS message"
 
-    invoke-virtual {v0, v1, v2}, Landroid/content/Context;->enforceCallingPermission(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-virtual {v1, v2, v3}, Landroid/content/Context;->enforceCallingPermission(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 720
-    invoke-static {v3}, Landroid/app/FlymePermissionManager;->isFlymePermissionGranted(I)Z
+    const/16 v1, 0x14
 
-    move-result v0
+    invoke-static {v1}, Landroid/app/FlymePermissionManager;->isFlymePermissionGranted(I)Z
 
-    if-nez v0, :cond_1
+    move-result v1
+
+    if-nez v1, :cond_1
 
     .line 761
     :cond_0
     :goto_0
     return-void
 
-    .line 743
+    .line 729
     :cond_1
-    new-instance v7, Landroid/os/Bundle;
+    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mContext:Landroid/content/Context;
 
-    invoke-direct {v7}, Landroid/os/Bundle;-><init>()V
+    const-string v1, "android.permission.SEND_SMS"
 
-    .line 744
-    .local v7, "extraInfo":Landroid/os/Bundle;
-    const-string v0, "recipient"
-
-    invoke-virtual {v7, v0, p2}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
-
-    .line 745
-    const-string v0, "data"
-
-    invoke-virtual {v7, v0, p5}, Landroid/os/Bundle;->putByteArray(Ljava/lang/String;[B)V
-
-    .line 746
-    const-string v0, "sendData()"
-
-    invoke-direct {p0, v7, v0}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_0
-
-    .line 751
-    const-string v0, "SMS"
-
-    const/4 v1, 0x2
-
-    invoke-static {v0, v1}, Landroid/telephony/Rlog;->isLoggable(Ljava/lang/String;I)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_2
-
-    .line 752
-    new-instance v0, Ljava/lang/StringBuilder;
-
-    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v1, "sendData: destAddr="
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    invoke-virtual {v0, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    const-string v1, " scAddr="
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    invoke-virtual {v0, p3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    const-string v1, " destPort="
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    invoke-virtual {v0, p4}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    const-string v1, " data=\'"
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    invoke-static {p5}, Lcom/android/internal/util/HexDump;->toHexString([B)Ljava/lang/String;
-
-    move-result-object v1
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    const-string v1, "\' sentIntent="
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    invoke-virtual {v0, p6}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    const-string v1, " deliveryIntent="
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    invoke-virtual {v0, p7}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v0
-
-    invoke-virtual {p0, v0}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->log(Ljava/lang/String;)V
-
-    .line 756
-    :cond_2
-    iget-object v0, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mAppOps:Landroid/app/AppOpsManager;
-
-    invoke-static {}, Landroid/os/Binder;->getCallingUid()I
+    invoke-static {v1}, Landroid/content/Context;->isAskPermissionDenied(Ljava/lang/String;)Z
 
     move-result v1
 
-    invoke-virtual {v0, v3, v1, p1}, Landroid/app/AppOpsManager;->noteOp(IILjava/lang/String;)I
+    if-eqz v1, :cond_2
 
-    move-result v0
+    .line 730
+    if-eqz p6, :cond_0
 
-    if-nez v0, :cond_0
+    .line 732
+    const/4 v1, 0x1
+
+    :try_start_0
+    move-object/from16 v0, p6
+
+    invoke-virtual {v0, v1}, Landroid/app/PendingIntent;->send(I)V
+    :try_end_0
+    .catch Landroid/app/PendingIntent$CanceledException; {:try_start_0 .. :try_end_0} :catch_0
+
+    goto :goto_0
+
+    .line 733
+    :catch_0
+    move-exception v8
+
+    .line 734
+    .local v8, "ex":Landroid/app/PendingIntent$CanceledException;
+    const-string v1, "IccSmsInterfaceManager"
+
+    const-string v2, "failed to send error result"
+
+    invoke-static {v1, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_0
+
+    .line 743
+    .end local v8    # "ex":Landroid/app/PendingIntent$CanceledException;
+    :cond_2
+    new-instance v9, Landroid/os/Bundle;
+
+    invoke-direct {v9}, Landroid/os/Bundle;-><init>()V
+
+    .line 744
+    .local v9, "extraInfo":Landroid/os/Bundle;
+    const-string v1, "recipient"
+
+    invoke-virtual {v9, v1, p2}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 745
+    const-string v1, "data"
+
+    invoke-virtual {v9, v1, p5}, Landroid/os/Bundle;->putByteArray(Ljava/lang/String;[B)V
+
+    .line 746
+    const-string v1, "sendData()"
+
+    invoke-direct {p0, v9, v1}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_0
+
+    .line 751
+    const-string v1, "SMS"
+
+    const/4 v2, 0x2
+
+    invoke-static {v1, v2}, Landroid/telephony/Rlog;->isLoggable(Ljava/lang/String;I)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_3
+
+    .line 752
+    new-instance v1, Ljava/lang/StringBuilder;
+
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v2, "sendData: destAddr="
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v2, " scAddr="
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, p3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v2, " destPort="
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, p4}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v2, " data=\'"
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-static {p5}, Lcom/android/internal/util/HexDump;->toHexString([B)Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v2, "\' sentIntent="
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    move-object/from16 v0, p6
+
+    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v2, " deliveryIntent="
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    move-object/from16 v0, p7
+
+    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {p0, v1}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->log(Ljava/lang/String;)V
+
+    .line 756
+    :cond_3
+    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mAppOps:Landroid/app/AppOpsManager;
+
+    const/16 v2, 0x14
+
+    invoke-static {}, Landroid/os/Binder;->getCallingUid()I
+
+    move-result v3
+
+    invoke-virtual {v1, v2, v3, p1}, Landroid/app/AppOpsManager;->noteOp(IILjava/lang/String;)I
+
+    move-result v1
+
+    if-nez v1, :cond_0
 
     .line 760
-    iget-object v0, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mDispatcher:Lcom/android/internal/telephony/SMSDispatcher;
+    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mDispatcher:Lcom/android/internal/telephony/SMSDispatcher;
 
-    move-object v1, p2
+    move-object v2, p2
 
-    move-object v2, p3
+    move-object v3, p3
 
-    move v3, p4
+    move v4, p4
 
-    move-object v4, p5
+    move-object v5, p5
 
-    move-object v5, p6
+    move-object/from16 v6, p6
 
-    move-object v6, p7
+    move-object/from16 v7, p7
 
-    invoke-virtual/range {v0 .. v6}, Lcom/android/internal/telephony/SMSDispatcher;->sendData(Ljava/lang/String;Ljava/lang/String;I[BLandroid/app/PendingIntent;Landroid/app/PendingIntent;)V
+    invoke-virtual/range {v1 .. v7}, Lcom/android/internal/telephony/SMSDispatcher;->sendData(Ljava/lang/String;Ljava/lang/String;I[BLandroid/app/PendingIntent;Landroid/app/PendingIntent;)V
 
     goto/16 :goto_0
 .end method
 
 .method public sendDataWithOriginalPort(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;II[BLandroid/app/PendingIntent;Landroid/app/PendingIntent;)V
-    .locals 10
+    .locals 11
     .param p1, "callingPackage"    # Ljava/lang/String;
     .param p2, "destAddr"    # Ljava/lang/String;
     .param p3, "scAddr"    # Ljava/lang/String;
@@ -5651,29 +5699,71 @@
     :goto_0
     return-void
 
-    .line 1371
+    .line 1358
     :cond_1
-    new-instance v9, Landroid/os/Bundle;
+    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mContext:Landroid/content/Context;
 
-    invoke-direct {v9}, Landroid/os/Bundle;-><init>()V
+    const-string v1, "android.permission.SEND_SMS"
+
+    invoke-static {v1}, Landroid/content/Context;->isAskPermissionDenied(Ljava/lang/String;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_2
+
+    .line 1359
+    if-eqz p7, :cond_0
+
+    .line 1361
+    const/4 v1, 0x1
+
+    :try_start_0
+    move-object/from16 v0, p7
+
+    invoke-virtual {v0, v1}, Landroid/app/PendingIntent;->send(I)V
+    :try_end_0
+    .catch Landroid/app/PendingIntent$CanceledException; {:try_start_0 .. :try_end_0} :catch_0
+
+    goto :goto_0
+
+    .line 1362
+    :catch_0
+    move-exception v9
+
+    .line 1363
+    .local v9, "ex":Landroid/app/PendingIntent$CanceledException;
+    const-string v1, "IccSmsInterfaceManager"
+
+    const-string v2, "failed to send error result"
+
+    invoke-static {v1, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_0
+
+    .line 1371
+    .end local v9    # "ex":Landroid/app/PendingIntent$CanceledException;
+    :cond_2
+    new-instance v10, Landroid/os/Bundle;
+
+    invoke-direct {v10}, Landroid/os/Bundle;-><init>()V
 
     .line 1372
-    .local v9, "extraInfo":Landroid/os/Bundle;
+    .local v10, "extraInfo":Landroid/os/Bundle;
     const-string v1, "recipient"
 
-    invoke-virtual {v9, v1, p2}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-virtual {v10, v1, p2}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 1373
     const-string v1, "data"
 
     move-object/from16 v0, p6
 
-    invoke-virtual {v9, v1, v0}, Landroid/os/Bundle;->putByteArray(Ljava/lang/String;[B)V
+    invoke-virtual {v10, v1, v0}, Landroid/os/Bundle;->putByteArray(Ljava/lang/String;[B)V
 
     .line 1374
     const-string v1, "sendDataWithOriginalPort()"
 
-    invoke-direct {p0, v9, v1}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
+    invoke-direct {p0, v10, v1}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
 
     move-result v1
 
@@ -5688,7 +5778,7 @@
 
     move-result v1
 
-    if-eqz v1, :cond_2
+    if-eqz v1, :cond_3
 
     .line 1380
     new-instance v1, Ljava/lang/StringBuilder;
@@ -5731,7 +5821,9 @@
 
     move-result-object v1
 
-    invoke-virtual {v1, p5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    move/from16 v0, p5
+
+    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v1
 
@@ -5780,7 +5872,7 @@
     invoke-virtual {p0, v1}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->log(Ljava/lang/String;)V
 
     .line 1384
-    :cond_2
+    :cond_3
     iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mAppOps:Landroid/app/AppOpsManager;
 
     const/16 v2, 0x14
@@ -5804,7 +5896,7 @@
 
     move v4, p4
 
-    move v5, p5
+    move/from16 v5, p5
 
     move-object/from16 v6, p6
 
@@ -5818,7 +5910,7 @@
 .end method
 
 .method public sendMultipartData(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/util/List;Ljava/util/List;Ljava/util/List;)V
-    .locals 12
+    .locals 14
     .param p1, "callingPackage"    # Ljava/lang/String;
     .param p2, "destAddr"    # Ljava/lang/String;
     .param p3, "scAddr"    # Ljava/lang/String;
@@ -5876,38 +5968,102 @@
     :goto_0
     return-void
 
-    .line 1453
+    .line 1438
     :cond_1
-    new-instance v10, Ljava/util/ArrayList;
+    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mContext:Landroid/content/Context;
 
-    invoke-direct {v10}, Ljava/util/ArrayList;-><init>()V
+    const-string v1, "android.permission.SEND_SMS"
+
+    invoke-static {v1}, Landroid/content/Context;->isAskPermissionDenied(Ljava/lang/String;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_2
+
+    .line 1439
+    if-eqz p6, :cond_0
+
+    .line 1441
+    :try_start_0
+    invoke-interface/range {p6 .. p6}, Ljava/util/List;->iterator()Ljava/util/Iterator;
+
+    move-result-object v10
+
+    .local v10, "i$":Ljava/util/Iterator;
+    :goto_1
+    invoke-interface {v10}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v1
+
+    if-eqz v1, :cond_0
+
+    invoke-interface {v10}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v13
+
+    check-cast v13, Landroid/app/PendingIntent;
+
+    .line 1442
+    .local v13, "sentIntent":Landroid/app/PendingIntent;
+    const/4 v1, 0x1
+
+    invoke-virtual {v13, v1}, Landroid/app/PendingIntent;->send(I)V
+    :try_end_0
+    .catch Landroid/app/PendingIntent$CanceledException; {:try_start_0 .. :try_end_0} :catch_0
+
+    goto :goto_1
+
+    .line 1444
+    .end local v10    # "i$":Ljava/util/Iterator;
+    .end local v13    # "sentIntent":Landroid/app/PendingIntent;
+    :catch_0
+    move-exception v8
+
+    .line 1445
+    .local v8, "ex":Landroid/app/PendingIntent$CanceledException;
+    const-string v1, "IccSmsInterfaceManager"
+
+    const-string v2, "failed to send error result"
+
+    invoke-static {v1, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_0
+
+    .line 1453
+    .end local v8    # "ex":Landroid/app/PendingIntent$CanceledException;
+    :cond_2
+    new-instance v11, Ljava/util/ArrayList;
+
+    invoke-direct {v11}, Ljava/util/ArrayList;-><init>()V
 
     .line 1454
-    .local v10, "list":Ljava/util/ArrayList;
+    .local v11, "list":Ljava/util/ArrayList;
     move-object/from16 v0, p5
 
-    invoke-virtual {v10, v0}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+    invoke-virtual {v11, v0}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
     .line 1455
-    new-instance v8, Landroid/os/Bundle;
+    new-instance v9, Landroid/os/Bundle;
 
-    invoke-direct {v8}, Landroid/os/Bundle;-><init>()V
+    invoke-direct {v9}, Landroid/os/Bundle;-><init>()V
 
     .line 1456
-    .local v8, "extraInfo":Landroid/os/Bundle;
+    .local v9, "extraInfo":Landroid/os/Bundle;
     const-string v1, "recipient"
 
-    invoke-virtual {v8, v1, p2}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
+    move-object/from16 v0, p2
+
+    invoke-virtual {v9, v1, v0}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 1457
     const-string v1, "multipartdata"
 
-    invoke-virtual {v8, v1, v10}, Landroid/os/Bundle;->putParcelableArrayList(Ljava/lang/String;Ljava/util/ArrayList;)V
+    invoke-virtual {v9, v1, v11}, Landroid/os/Bundle;->putParcelableArrayList(Ljava/lang/String;Ljava/util/ArrayList;)V
 
     .line 1458
     const-string v1, "sendMultipartData()"
 
-    invoke-direct {p0, v8, v1}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
+    invoke-direct {p0, v9, v1}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
 
     move-result v1
 
@@ -5922,29 +6078,29 @@
 
     move-result v1
 
-    if-eqz v1, :cond_2
+    if-eqz v1, :cond_3
 
     .line 1464
     invoke-interface/range {p5 .. p5}, Ljava/util/List;->iterator()Ljava/util/Iterator;
 
-    move-result-object v9
+    move-result-object v10
 
-    .local v9, "i$":Ljava/util/Iterator;
-    :goto_1
-    invoke-interface {v9}, Ljava/util/Iterator;->hasNext()Z
+    .restart local v10    # "i$":Ljava/util/Iterator;
+    :goto_2
+    invoke-interface {v10}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v1
 
-    if-eqz v1, :cond_2
+    if-eqz v1, :cond_3
 
-    invoke-interface {v9}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+    invoke-interface {v10}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
-    move-result-object v11
+    move-result-object v12
 
-    check-cast v11, Lcom/android/internal/telephony/SmsRawData;
+    check-cast v12, Lcom/android/internal/telephony/SmsRawData;
 
     .line 1465
-    .local v11, "rData":Lcom/android/internal/telephony/SmsRawData;
+    .local v12, "rData":Lcom/android/internal/telephony/SmsRawData;
     new-instance v1, Ljava/lang/StringBuilder;
 
     invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
@@ -5955,7 +6111,9 @@
 
     move-result-object v1
 
-    invoke-virtual {v1, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    move-object/from16 v0, p2
+
+    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v1
 
@@ -5965,7 +6123,9 @@
 
     move-result-object v1
 
-    invoke-virtual {v1, p3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    move-object/from16 v0, p3
+
+    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v1
 
@@ -5987,7 +6147,7 @@
 
     move-result-object v1
 
-    invoke-virtual {v11}, Lcom/android/internal/telephony/SmsRawData;->getBytes()[B
+    invoke-virtual {v12}, Lcom/android/internal/telephony/SmsRawData;->getBytes()[B
 
     move-result-object v2
 
@@ -6005,12 +6165,12 @@
 
     invoke-virtual {p0, v1}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->log(Ljava/lang/String;)V
 
-    goto :goto_1
+    goto :goto_2
 
     .line 1469
-    .end local v9    # "i$":Ljava/util/Iterator;
-    .end local v11    # "rData":Lcom/android/internal/telephony/SmsRawData;
-    :cond_2
+    .end local v10    # "i$":Ljava/util/Iterator;
+    .end local v12    # "rData":Lcom/android/internal/telephony/SmsRawData;
+    :cond_3
     iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mAppOps:Landroid/app/AppOpsManager;
 
     const/16 v2, 0x14
@@ -6040,9 +6200,9 @@
 
     check-cast v7, Ljava/util/ArrayList;
 
-    move-object v2, p2
+    move-object/from16 v2, p2
 
-    move-object v3, p3
+    move-object/from16 v3, p3
 
     move/from16 v4, p4
 
@@ -6052,7 +6212,7 @@
 .end method
 
 .method public tos_org_sendMultipartText(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
-    .locals 13
+    .locals 15
     .param p1, "callingPackage"    # Ljava/lang/String;
     .param p2, "destAddr"    # Ljava/lang/String;
     .param p3, "scAddr"    # Ljava/lang/String;
@@ -6108,38 +6268,102 @@
     :goto_0
     return-void
 
-    .line 895
+    .line 879
     :cond_1
-    new-instance v11, Ljava/util/ArrayList;
+    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mContext:Landroid/content/Context;
 
-    invoke-direct {v11}, Ljava/util/ArrayList;-><init>()V
+    const-string v1, "android.permission.SEND_SMS"
+
+    invoke-static {v1}, Landroid/content/Context;->isAskPermissionDenied(Ljava/lang/String;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_2
+
+    .line 880
+    if-eqz p5, :cond_0
+
+    .line 882
+    :try_start_0
+    invoke-interface/range {p5 .. p5}, Ljava/util/List;->iterator()Ljava/util/Iterator;
+
+    move-result-object v11
+
+    .local v11, "i$":Ljava/util/Iterator;
+    :goto_1
+    invoke-interface {v11}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v1
+
+    if-eqz v1, :cond_0
+
+    invoke-interface {v11}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v14
+
+    check-cast v14, Landroid/app/PendingIntent;
+
+    .line 883
+    .local v14, "sentIntent":Landroid/app/PendingIntent;
+    const/4 v1, 0x1
+
+    invoke-virtual {v14, v1}, Landroid/app/PendingIntent;->send(I)V
+    :try_end_0
+    .catch Landroid/app/PendingIntent$CanceledException; {:try_start_0 .. :try_end_0} :catch_0
+
+    goto :goto_1
+
+    .line 885
+    .end local v11    # "i$":Ljava/util/Iterator;
+    .end local v14    # "sentIntent":Landroid/app/PendingIntent;
+    :catch_0
+    move-exception v7
+
+    .line 886
+    .local v7, "ex":Landroid/app/PendingIntent$CanceledException;
+    const-string v1, "IccSmsInterfaceManager"
+
+    const-string v2, "failed to send error result"
+
+    invoke-static {v1, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_0
+
+    .line 895
+    .end local v7    # "ex":Landroid/app/PendingIntent$CanceledException;
+    :cond_2
+    new-instance v12, Ljava/util/ArrayList;
+
+    invoke-direct {v12}, Ljava/util/ArrayList;-><init>()V
 
     .line 896
-    .local v11, "list":Ljava/util/ArrayList;
+    .local v12, "list":Ljava/util/ArrayList;
     move-object/from16 v0, p4
 
-    invoke-virtual {v11, v0}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+    invoke-virtual {v12, v0}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
     .line 897
-    new-instance v7, Landroid/os/Bundle;
+    new-instance v8, Landroid/os/Bundle;
 
-    invoke-direct {v7}, Landroid/os/Bundle;-><init>()V
+    invoke-direct {v8}, Landroid/os/Bundle;-><init>()V
 
     .line 898
-    .local v7, "extraInfo":Landroid/os/Bundle;
+    .local v8, "extraInfo":Landroid/os/Bundle;
     const-string v1, "recipient"
 
-    invoke-virtual {v7, v1, p2}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
+    move-object/from16 v0, p2
+
+    invoke-virtual {v8, v1, v0}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 899
     const-string v1, "multiparttext"
 
-    invoke-virtual {v7, v1, v11}, Landroid/os/Bundle;->putParcelableArrayList(Ljava/lang/String;Ljava/util/ArrayList;)V
+    invoke-virtual {v8, v1, v12}, Landroid/os/Bundle;->putParcelableArrayList(Ljava/lang/String;Ljava/util/ArrayList;)V
 
     .line 900
     const-string v1, "sendMultipartText()"
 
-    invoke-direct {p0, v7, v1}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
+    invoke-direct {p0, v8, v1}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
 
     move-result v1
 
@@ -6154,33 +6378,33 @@
 
     move-result v1
 
-    if-eqz v1, :cond_2
+    if-eqz v1, :cond_3
 
     .line 906
-    const/4 v8, 0x0
+    const/4 v9, 0x0
 
     .line 907
-    .local v8, "i":I
+    .local v9, "i":I
     invoke-interface/range {p4 .. p4}, Ljava/util/List;->iterator()Ljava/util/Iterator;
 
-    move-result-object v10
+    move-result-object v11
 
-    .local v10, "i$":Ljava/util/Iterator;
-    :goto_1
-    invoke-interface {v10}, Ljava/util/Iterator;->hasNext()Z
+    .restart local v11    # "i$":Ljava/util/Iterator;
+    :goto_2
+    invoke-interface {v11}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v1
 
-    if-eqz v1, :cond_2
+    if-eqz v1, :cond_3
 
-    invoke-interface {v10}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+    invoke-interface {v11}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
-    move-result-object v12
+    move-result-object v13
 
-    check-cast v12, Ljava/lang/String;
+    check-cast v13, Ljava/lang/String;
 
     .line 908
-    .local v12, "part":Ljava/lang/String;
+    .local v13, "part":Ljava/lang/String;
     new-instance v1, Ljava/lang/StringBuilder;
 
     invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
@@ -6191,7 +6415,9 @@
 
     move-result-object v1
 
-    invoke-virtual {v1, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    move-object/from16 v0, p2
+
+    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v1
 
@@ -6213,11 +6439,11 @@
 
     move-result-object v1
 
-    add-int/lit8 v9, v8, 0x1
+    add-int/lit8 v10, v9, 0x1
 
-    .end local v8    # "i":I
-    .local v9, "i":I
-    invoke-virtual {v1, v8}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    .end local v9    # "i":I
+    .local v10, "i":I
+    invoke-virtual {v1, v9}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v1
 
@@ -6227,7 +6453,7 @@
 
     move-result-object v1
 
-    invoke-virtual {v1, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v1, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v1
 
@@ -6237,17 +6463,17 @@
 
     invoke-virtual {p0, v1}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->log(Ljava/lang/String;)V
 
-    move v8, v9
+    move v9, v10
 
-    .end local v9    # "i":I
-    .restart local v8    # "i":I
-    goto :goto_1
+    .end local v10    # "i":I
+    .restart local v9    # "i":I
+    goto :goto_2
 
     .line 912
-    .end local v8    # "i":I
-    .end local v10    # "i$":Ljava/util/Iterator;
-    .end local v12    # "part":Ljava/lang/String;
-    :cond_2
+    .end local v9    # "i":I
+    .end local v11    # "i$":Ljava/util/Iterator;
+    .end local v13    # "part":Ljava/lang/String;
+    :cond_3
     iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mAppOps:Landroid/app/AppOpsManager;
 
     const/16 v2, 0x14
@@ -6256,7 +6482,9 @@
 
     move-result v3
 
-    invoke-virtual {v1, v2, v3, p1}, Landroid/app/AppOpsManager;->noteOp(IILjava/lang/String;)I
+    move-object/from16 v0, p1
+
+    invoke-virtual {v1, v2, v3, v0}, Landroid/app/AppOpsManager;->noteOp(IILjava/lang/String;)I
 
     move-result v1
 
@@ -6277,7 +6505,7 @@
 
     check-cast v6, Ljava/util/ArrayList;
 
-    move-object v2, p2
+    move-object/from16 v2, p2
 
     move-object/from16 v3, p3
 
@@ -6287,7 +6515,7 @@
 .end method
 
 .method public sendMultipartTextWithEncodingType(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;)V
-    .locals 9
+    .locals 13
     .param p1, "callingPackage"    # Ljava/lang/String;
     .param p2, "destAddr"    # Ljava/lang/String;
     .param p3, "scAddr"    # Ljava/lang/String;
@@ -6318,110 +6546,174 @@
     .local p4, "parts":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
     .local p6, "sentIntents":Ljava/util/List;, "Ljava/util/List<Landroid/app/PendingIntent;>;"
     .local p7, "deliveryIntents":Ljava/util/List;, "Ljava/util/List<Landroid/app/PendingIntent;>;"
-    iget-object v0, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mPhone:Lcom/android/internal/telephony/PhoneBase;
+    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mPhone:Lcom/android/internal/telephony/PhoneBase;
 
-    invoke-virtual {v0}, Lcom/android/internal/telephony/PhoneBase;->getContext()Landroid/content/Context;
+    invoke-virtual {v1}, Lcom/android/internal/telephony/PhoneBase;->getContext()Landroid/content/Context;
 
-    move-result-object v0
+    move-result-object v1
 
-    const-string v1, "android.permission.SEND_SMS"
+    const-string v2, "android.permission.SEND_SMS"
 
-    const-string v2, "Sending SMS message"
+    const-string v3, "Sending SMS message"
 
-    invoke-virtual {v0, v1, v2}, Landroid/content/Context;->enforceCallingPermission(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-virtual {v1, v2, v3}, Landroid/content/Context;->enforceCallingPermission(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 1775
-    const/16 v0, 0x14
+    const/16 v1, 0x14
 
-    invoke-static {v0}, Landroid/app/FlymePermissionManager;->isFlymePermissionGranted(I)Z
+    invoke-static {v1}, Landroid/app/FlymePermissionManager;->isFlymePermissionGranted(I)Z
 
-    move-result v0
+    move-result v1
 
-    if-nez v0, :cond_1
+    if-nez v1, :cond_1
 
     .line 1819
     :cond_0
     :goto_0
     return-void
 
-    .line 1798
+    .line 1783
     :cond_1
-    new-instance v8, Ljava/util/ArrayList;
+    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mContext:Landroid/content/Context;
 
-    invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
+    const-string v1, "android.permission.SEND_SMS"
+
+    invoke-static {v1}, Landroid/content/Context;->isAskPermissionDenied(Ljava/lang/String;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_2
+
+    .line 1784
+    if-eqz p6, :cond_0
+
+    .line 1786
+    :try_start_0
+    invoke-interface/range {p6 .. p6}, Ljava/util/List;->iterator()Ljava/util/Iterator;
+
+    move-result-object v10
+
+    .local v10, "i$":Ljava/util/Iterator;
+    :goto_1
+    invoke-interface {v10}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v1
+
+    if-eqz v1, :cond_0
+
+    invoke-interface {v10}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v12
+
+    check-cast v12, Landroid/app/PendingIntent;
+
+    .line 1787
+    .local v12, "sentIntent":Landroid/app/PendingIntent;
+    const/4 v1, 0x1
+
+    invoke-virtual {v12, v1}, Landroid/app/PendingIntent;->send(I)V
+    :try_end_0
+    .catch Landroid/app/PendingIntent$CanceledException; {:try_start_0 .. :try_end_0} :catch_0
+
+    goto :goto_1
+
+    .line 1789
+    .end local v10    # "i$":Ljava/util/Iterator;
+    .end local v12    # "sentIntent":Landroid/app/PendingIntent;
+    :catch_0
+    move-exception v8
+
+    .line 1790
+    .local v8, "ex":Landroid/app/PendingIntent$CanceledException;
+    const-string v1, "IccSmsInterfaceManager"
+
+    const-string v2, "failed to send error result"
+
+    invoke-static {v1, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_0
+
+    .line 1798
+    .end local v8    # "ex":Landroid/app/PendingIntent$CanceledException;
+    :cond_2
+    new-instance v11, Ljava/util/ArrayList;
+
+    invoke-direct {v11}, Ljava/util/ArrayList;-><init>()V
 
     .line 1799
-    .local v8, "list":Ljava/util/ArrayList;
-    invoke-virtual {v8, p4}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+    .local v11, "list":Ljava/util/ArrayList;
+    move-object/from16 v0, p4
+
+    invoke-virtual {v11, v0}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
     .line 1800
-    new-instance v7, Landroid/os/Bundle;
+    new-instance v9, Landroid/os/Bundle;
 
-    invoke-direct {v7}, Landroid/os/Bundle;-><init>()V
+    invoke-direct {v9}, Landroid/os/Bundle;-><init>()V
 
     .line 1801
-    .local v7, "extraInfo":Landroid/os/Bundle;
-    const-string v0, "recipient"
+    .local v9, "extraInfo":Landroid/os/Bundle;
+    const-string v1, "recipient"
 
-    invoke-virtual {v7, v0, p2}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-virtual {v9, v1, p2}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 1802
-    const-string v0, "multiparttext"
+    const-string v1, "multiparttext"
 
-    invoke-virtual {v7, v0, v8}, Landroid/os/Bundle;->putParcelableArrayList(Ljava/lang/String;Ljava/util/ArrayList;)V
+    invoke-virtual {v9, v1, v11}, Landroid/os/Bundle;->putParcelableArrayList(Ljava/lang/String;Ljava/util/ArrayList;)V
 
     .line 1803
-    const-string v0, "sendMultipartTextWithEncodingType()"
+    const-string v1, "sendMultipartTextWithEncodingType()"
 
-    invoke-direct {p0, v7, v0}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
+    invoke-direct {p0, v9, v1}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
 
-    move-result v0
+    move-result v1
 
-    if-eqz v0, :cond_0
+    if-eqz v1, :cond_0
 
     .line 1808
-    iget-object v0, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mAppOps:Landroid/app/AppOpsManager;
+    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mAppOps:Landroid/app/AppOpsManager;
 
-    const/16 v1, 0x14
+    const/16 v2, 0x14
 
     invoke-static {}, Landroid/os/Binder;->getCallingUid()I
 
-    move-result v2
+    move-result v3
 
-    invoke-virtual {v0, v1, v2, p1}, Landroid/app/AppOpsManager;->noteOp(IILjava/lang/String;)I
+    invoke-virtual {v1, v2, v3, p1}, Landroid/app/AppOpsManager;->noteOp(IILjava/lang/String;)I
 
-    move-result v0
+    move-result v1
 
-    if-nez v0, :cond_0
+    if-nez v1, :cond_0
 
     .line 1812
-    iget-object v0, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mDispatcher:Lcom/android/internal/telephony/SMSDispatcher;
+    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mDispatcher:Lcom/android/internal/telephony/SMSDispatcher;
 
-    move-object v3, p4
+    move-object/from16 v4, p4
 
-    check-cast v3, Ljava/util/ArrayList;
+    check-cast v4, Ljava/util/ArrayList;
 
-    move-object v5, p6
-
-    check-cast v5, Ljava/util/ArrayList;
-
-    move-object/from16 v6, p7
+    move-object/from16 v6, p6
 
     check-cast v6, Ljava/util/ArrayList;
 
-    move-object v1, p2
+    move-object/from16 v7, p7
 
-    move-object v2, p3
+    check-cast v7, Ljava/util/ArrayList;
 
-    move v4, p5
+    move-object v2, p2
 
-    invoke-virtual/range {v0 .. v6}, Lcom/android/internal/telephony/SMSDispatcher;->sendMultipartTextWithEncodingType(Ljava/lang/String;Ljava/lang/String;Ljava/util/ArrayList;ILjava/util/ArrayList;Ljava/util/ArrayList;)V
+    move-object/from16 v3, p3
+
+    move/from16 v5, p5
+
+    invoke-virtual/range {v1 .. v7}, Lcom/android/internal/telephony/SMSDispatcher;->sendMultipartTextWithEncodingType(Ljava/lang/String;Ljava/lang/String;Ljava/util/ArrayList;ILjava/util/ArrayList;Ljava/util/ArrayList;)V
 
     goto :goto_0
 .end method
 
 .method public sendMultipartTextWithExtraParams(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Landroid/os/Bundle;Ljava/util/List;Ljava/util/List;)V
-    .locals 9
+    .locals 13
     .param p1, "callingPackage"    # Ljava/lang/String;
     .param p2, "destAddr"    # Ljava/lang/String;
     .param p3, "scAddr"    # Ljava/lang/String;
@@ -6453,110 +6745,174 @@
     .local p4, "parts":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
     .local p6, "sentIntents":Ljava/util/List;, "Ljava/util/List<Landroid/app/PendingIntent;>;"
     .local p7, "deliveryIntents":Ljava/util/List;, "Ljava/util/List<Landroid/app/PendingIntent;>;"
-    iget-object v0, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mPhone:Lcom/android/internal/telephony/PhoneBase;
+    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mPhone:Lcom/android/internal/telephony/PhoneBase;
 
-    invoke-virtual {v0}, Lcom/android/internal/telephony/PhoneBase;->getContext()Landroid/content/Context;
+    invoke-virtual {v1}, Lcom/android/internal/telephony/PhoneBase;->getContext()Landroid/content/Context;
 
-    move-result-object v0
+    move-result-object v1
 
-    const-string v1, "android.permission.SEND_SMS"
+    const-string v2, "android.permission.SEND_SMS"
 
-    const-string v2, "Sending SMS message"
+    const-string v3, "Sending SMS message"
 
-    invoke-virtual {v0, v1, v2}, Landroid/content/Context;->enforceCallingPermission(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-virtual {v1, v2, v3}, Landroid/content/Context;->enforceCallingPermission(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 1918
-    const/16 v0, 0x14
+    const/16 v1, 0x14
 
-    invoke-static {v0}, Landroid/app/FlymePermissionManager;->isFlymePermissionGranted(I)Z
+    invoke-static {v1}, Landroid/app/FlymePermissionManager;->isFlymePermissionGranted(I)Z
 
-    move-result v0
+    move-result v1
 
-    if-nez v0, :cond_1
+    if-nez v1, :cond_1
 
     .line 1957
     :cond_0
     :goto_0
     return-void
 
-    .line 1941
+    .line 1926
     :cond_1
-    new-instance v8, Ljava/util/ArrayList;
+    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mContext:Landroid/content/Context;
 
-    invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
+    const-string v1, "android.permission.SEND_SMS"
+
+    invoke-static {v1}, Landroid/content/Context;->isAskPermissionDenied(Ljava/lang/String;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_2
+
+    .line 1927
+    if-eqz p6, :cond_0
+
+    .line 1929
+    :try_start_0
+    invoke-interface/range {p6 .. p6}, Ljava/util/List;->iterator()Ljava/util/Iterator;
+
+    move-result-object v10
+
+    .local v10, "i$":Ljava/util/Iterator;
+    :goto_1
+    invoke-interface {v10}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v1
+
+    if-eqz v1, :cond_0
+
+    invoke-interface {v10}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v12
+
+    check-cast v12, Landroid/app/PendingIntent;
+
+    .line 1930
+    .local v12, "sentIntent":Landroid/app/PendingIntent;
+    const/4 v1, 0x1
+
+    invoke-virtual {v12, v1}, Landroid/app/PendingIntent;->send(I)V
+    :try_end_0
+    .catch Landroid/app/PendingIntent$CanceledException; {:try_start_0 .. :try_end_0} :catch_0
+
+    goto :goto_1
+
+    .line 1932
+    .end local v10    # "i$":Ljava/util/Iterator;
+    .end local v12    # "sentIntent":Landroid/app/PendingIntent;
+    :catch_0
+    move-exception v8
+
+    .line 1933
+    .local v8, "ex":Landroid/app/PendingIntent$CanceledException;
+    const-string v1, "IccSmsInterfaceManager"
+
+    const-string v2, "failed to send error result"
+
+    invoke-static {v1, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_0
+
+    .line 1941
+    .end local v8    # "ex":Landroid/app/PendingIntent$CanceledException;
+    :cond_2
+    new-instance v11, Ljava/util/ArrayList;
+
+    invoke-direct {v11}, Ljava/util/ArrayList;-><init>()V
 
     .line 1942
-    .local v8, "list":Ljava/util/ArrayList;
-    invoke-virtual {v8, p4}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+    .local v11, "list":Ljava/util/ArrayList;
+    move-object/from16 v0, p4
+
+    invoke-virtual {v11, v0}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
     .line 1943
-    new-instance v7, Landroid/os/Bundle;
+    new-instance v9, Landroid/os/Bundle;
 
-    invoke-direct {v7}, Landroid/os/Bundle;-><init>()V
+    invoke-direct {v9}, Landroid/os/Bundle;-><init>()V
 
     .line 1944
-    .local v7, "extraInfo":Landroid/os/Bundle;
-    const-string v0, "recipient"
+    .local v9, "extraInfo":Landroid/os/Bundle;
+    const-string v1, "recipient"
 
-    invoke-virtual {v7, v0, p2}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-virtual {v9, v1, p2}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 1945
-    const-string v0, "multiparttext"
+    const-string v1, "multiparttext"
 
-    invoke-virtual {v7, v0, v8}, Landroid/os/Bundle;->putParcelableArrayList(Ljava/lang/String;Ljava/util/ArrayList;)V
+    invoke-virtual {v9, v1, v11}, Landroid/os/Bundle;->putParcelableArrayList(Ljava/lang/String;Ljava/util/ArrayList;)V
 
     .line 1946
-    const-string v0, "sendMultipartTextWithExtraParams()"
+    const-string v1, "sendMultipartTextWithExtraParams()"
 
-    invoke-direct {p0, v7, v0}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
+    invoke-direct {p0, v9, v1}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
 
-    move-result v0
+    move-result v1
 
-    if-eqz v0, :cond_0
+    if-eqz v1, :cond_0
 
     .line 1951
-    iget-object v0, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mAppOps:Landroid/app/AppOpsManager;
+    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mAppOps:Landroid/app/AppOpsManager;
 
-    const/16 v1, 0x14
+    const/16 v2, 0x14
 
     invoke-static {}, Landroid/os/Binder;->getCallingUid()I
 
-    move-result v2
+    move-result v3
 
-    invoke-virtual {v0, v1, v2, p1}, Landroid/app/AppOpsManager;->noteOp(IILjava/lang/String;)I
+    invoke-virtual {v1, v2, v3, p1}, Landroid/app/AppOpsManager;->noteOp(IILjava/lang/String;)I
 
-    move-result v0
+    move-result v1
 
-    if-nez v0, :cond_0
+    if-nez v1, :cond_0
 
     .line 1955
-    iget-object v0, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mDispatcher:Lcom/android/internal/telephony/SMSDispatcher;
+    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mDispatcher:Lcom/android/internal/telephony/SMSDispatcher;
 
-    move-object v3, p4
+    move-object/from16 v4, p4
 
-    check-cast v3, Ljava/util/ArrayList;
+    check-cast v4, Ljava/util/ArrayList;
 
-    move-object v5, p6
-
-    check-cast v5, Ljava/util/ArrayList;
-
-    move-object/from16 v6, p7
+    move-object/from16 v6, p6
 
     check-cast v6, Ljava/util/ArrayList;
 
-    move-object v1, p2
+    move-object/from16 v7, p7
 
-    move-object v2, p3
+    check-cast v7, Ljava/util/ArrayList;
 
-    move-object v4, p5
+    move-object v2, p2
 
-    invoke-virtual/range {v0 .. v6}, Lcom/android/internal/telephony/SMSDispatcher;->sendMultipartTextWithExtraParams(Ljava/lang/String;Ljava/lang/String;Ljava/util/ArrayList;Landroid/os/Bundle;Ljava/util/ArrayList;Ljava/util/ArrayList;)V
+    move-object/from16 v3, p3
+
+    move-object/from16 v5, p5
+
+    invoke-virtual/range {v1 .. v7}, Lcom/android/internal/telephony/SMSDispatcher;->sendMultipartTextWithExtraParams(Ljava/lang/String;Ljava/lang/String;Ljava/util/ArrayList;Landroid/os/Bundle;Ljava/util/ArrayList;Ljava/util/ArrayList;)V
 
     goto :goto_0
 .end method
 
 .method public sendMultipartTextWithPort(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/List;)V
-    .locals 14
+    .locals 16
     .param p1, "callingPackage"    # Ljava/lang/String;
     .param p2, "destAddr"    # Ljava/lang/String;
     .param p3, "scAddr"    # Ljava/lang/String;
@@ -6587,7 +6943,9 @@
     .local p4, "parts":Ljava/util/List;, "Ljava/util/List<Ljava/lang/String;>;"
     .local p6, "sentIntents":Ljava/util/List;, "Ljava/util/List<Landroid/app/PendingIntent;>;"
     .local p7, "deliveryIntents":Ljava/util/List;, "Ljava/util/List<Landroid/app/PendingIntent;>;"
-    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mPhone:Lcom/android/internal/telephony/PhoneBase;
+    move-object/from16 v0, p0
+
+    iget-object v1, v0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mPhone:Lcom/android/internal/telephony/PhoneBase;
 
     invoke-virtual {v1}, Lcom/android/internal/telephony/PhoneBase;->getContext()Landroid/content/Context;
 
@@ -6613,40 +6971,106 @@
     :goto_0
     return-void
 
-    .line 1614
+    .line 1599
     :cond_1
-    new-instance v12, Ljava/util/ArrayList;
+    move-object/from16 v0, p0
 
-    invoke-direct {v12}, Ljava/util/ArrayList;-><init>()V
+    iget-object v1, v0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mContext:Landroid/content/Context;
+
+    const-string v1, "android.permission.SEND_SMS"
+
+    invoke-static {v1}, Landroid/content/Context;->isAskPermissionDenied(Ljava/lang/String;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_2
+
+    .line 1600
+    if-eqz p6, :cond_0
+
+    .line 1602
+    :try_start_0
+    invoke-interface/range {p6 .. p6}, Ljava/util/List;->iterator()Ljava/util/Iterator;
+
+    move-result-object v12
+
+    .local v12, "i$":Ljava/util/Iterator;
+    :goto_1
+    invoke-interface {v12}, Ljava/util/Iterator;->hasNext()Z
+
+    move-result v1
+
+    if-eqz v1, :cond_0
+
+    invoke-interface {v12}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+
+    move-result-object v15
+
+    check-cast v15, Landroid/app/PendingIntent;
+
+    .line 1603
+    .local v15, "sentIntent":Landroid/app/PendingIntent;
+    const/4 v1, 0x1
+
+    invoke-virtual {v15, v1}, Landroid/app/PendingIntent;->send(I)V
+    :try_end_0
+    .catch Landroid/app/PendingIntent$CanceledException; {:try_start_0 .. :try_end_0} :catch_0
+
+    goto :goto_1
+
+    .line 1605
+    .end local v12    # "i$":Ljava/util/Iterator;
+    .end local v15    # "sentIntent":Landroid/app/PendingIntent;
+    :catch_0
+    move-exception v8
+
+    .line 1606
+    .local v8, "ex":Landroid/app/PendingIntent$CanceledException;
+    const-string v1, "IccSmsInterfaceManager"
+
+    const-string v2, "failed to send error result"
+
+    invoke-static {v1, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_0
+
+    .line 1614
+    .end local v8    # "ex":Landroid/app/PendingIntent$CanceledException;
+    :cond_2
+    new-instance v13, Ljava/util/ArrayList;
+
+    invoke-direct {v13}, Ljava/util/ArrayList;-><init>()V
 
     .line 1615
-    .local v12, "list":Ljava/util/ArrayList;
+    .local v13, "list":Ljava/util/ArrayList;
     move-object/from16 v0, p4
 
-    invoke-virtual {v12, v0}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
+    invoke-virtual {v13, v0}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
     .line 1616
-    new-instance v8, Landroid/os/Bundle;
+    new-instance v9, Landroid/os/Bundle;
 
-    invoke-direct {v8}, Landroid/os/Bundle;-><init>()V
+    invoke-direct {v9}, Landroid/os/Bundle;-><init>()V
 
     .line 1617
-    .local v8, "extraInfo":Landroid/os/Bundle;
+    .local v9, "extraInfo":Landroid/os/Bundle;
     const-string v1, "recipient"
 
     move-object/from16 v0, p2
 
-    invoke-virtual {v8, v1, v0}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-virtual {v9, v1, v0}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 1618
     const-string v1, "multiparttext"
 
-    invoke-virtual {v8, v1, v12}, Landroid/os/Bundle;->putParcelableArrayList(Ljava/lang/String;Ljava/util/ArrayList;)V
+    invoke-virtual {v9, v1, v13}, Landroid/os/Bundle;->putParcelableArrayList(Ljava/lang/String;Ljava/util/ArrayList;)V
 
     .line 1619
     const-string v1, "sendMultipartTextWithPort()"
 
-    invoke-direct {p0, v8, v1}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
+    move-object/from16 v0, p0
+
+    invoke-direct {v0, v9, v1}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
 
     move-result v1
 
@@ -6661,33 +7085,33 @@
 
     move-result v1
 
-    if-eqz v1, :cond_2
+    if-eqz v1, :cond_3
 
     .line 1625
-    const/4 v9, 0x0
+    const/4 v10, 0x0
 
     .line 1626
-    .local v9, "i":I
+    .local v10, "i":I
     invoke-interface/range {p4 .. p4}, Ljava/util/List;->iterator()Ljava/util/Iterator;
 
-    move-result-object v11
+    move-result-object v12
 
-    .local v11, "i$":Ljava/util/Iterator;
-    :goto_1
-    invoke-interface {v11}, Ljava/util/Iterator;->hasNext()Z
+    .restart local v12    # "i$":Ljava/util/Iterator;
+    :goto_2
+    invoke-interface {v12}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v1
 
-    if-eqz v1, :cond_2
+    if-eqz v1, :cond_3
 
-    invoke-interface {v11}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+    invoke-interface {v12}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
-    move-result-object v13
+    move-result-object v14
 
-    check-cast v13, Ljava/lang/String;
+    check-cast v14, Ljava/lang/String;
 
     .line 1627
-    .local v13, "part":Ljava/lang/String;
+    .local v14, "part":Ljava/lang/String;
     new-instance v1, Ljava/lang/StringBuilder;
 
     invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
@@ -6734,11 +7158,11 @@
 
     move-result-object v1
 
-    add-int/lit8 v10, v9, 0x1
+    add-int/lit8 v11, v10, 0x1
 
-    .end local v9    # "i":I
-    .local v10, "i":I
-    invoke-virtual {v1, v9}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    .end local v10    # "i":I
+    .local v11, "i":I
+    invoke-virtual {v1, v10}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
     move-result-object v1
 
@@ -6748,7 +7172,7 @@
 
     move-result-object v1
 
-    invoke-virtual {v1, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v1, v14}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v1
 
@@ -6756,20 +7180,24 @@
 
     move-result-object v1
 
-    invoke-virtual {p0, v1}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->log(Ljava/lang/String;)V
+    move-object/from16 v0, p0
 
-    move v9, v10
+    invoke-virtual {v0, v1}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->log(Ljava/lang/String;)V
 
-    .end local v10    # "i":I
-    .restart local v9    # "i":I
-    goto :goto_1
+    move v10, v11
+
+    .end local v11    # "i":I
+    .restart local v10    # "i":I
+    goto :goto_2
 
     .line 1631
-    .end local v9    # "i":I
-    .end local v11    # "i$":Ljava/util/Iterator;
-    .end local v13    # "part":Ljava/lang/String;
-    :cond_2
-    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mAppOps:Landroid/app/AppOpsManager;
+    .end local v10    # "i":I
+    .end local v12    # "i$":Ljava/util/Iterator;
+    .end local v14    # "part":Ljava/lang/String;
+    :cond_3
+    move-object/from16 v0, p0
+
+    iget-object v1, v0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mAppOps:Landroid/app/AppOpsManager;
 
     const/16 v2, 0x14
 
@@ -6777,14 +7205,18 @@
 
     move-result v3
 
-    invoke-virtual {v1, v2, v3, p1}, Landroid/app/AppOpsManager;->noteOp(IILjava/lang/String;)I
+    move-object/from16 v0, p1
+
+    invoke-virtual {v1, v2, v3, v0}, Landroid/app/AppOpsManager;->noteOp(IILjava/lang/String;)I
 
     move-result v1
 
     if-nez v1, :cond_0
 
     .line 1635
-    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mDispatcher:Lcom/android/internal/telephony/SMSDispatcher;
+    move-object/from16 v0, p0
+
+    iget-object v1, v0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mDispatcher:Lcom/android/internal/telephony/SMSDispatcher;
 
     move-object/from16 v4, p4
 
@@ -6934,7 +7366,7 @@
 .end method
 
 .method public tos_org_sendText(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Landroid/app/PendingIntent;Landroid/app/PendingIntent;)V
-    .locals 7
+    .locals 8
     .param p1, "callingPackage"    # Ljava/lang/String;
     .param p2, "destAddr"    # Ljava/lang/String;
     .param p3, "scAddr"    # Ljava/lang/String;
@@ -6970,27 +7402,67 @@
     :goto_0
     return-void
 
-    .line 817
+    .line 803
     :cond_1
-    new-instance v6, Landroid/os/Bundle;
+    iget-object v0, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mContext:Landroid/content/Context;
 
-    invoke-direct {v6}, Landroid/os/Bundle;-><init>()V
+    const-string v0, "android.permission.SEND_SMS"
+
+    invoke-static {v0}, Landroid/content/Context;->isAskPermissionDenied(Ljava/lang/String;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_2
+
+    .line 804
+    if-eqz p5, :cond_0
+
+    .line 806
+    const/4 v0, 0x1
+
+    :try_start_0
+    invoke-virtual {p5, v0}, Landroid/app/PendingIntent;->send(I)V
+    :try_end_0
+    .catch Landroid/app/PendingIntent$CanceledException; {:try_start_0 .. :try_end_0} :catch_0
+
+    goto :goto_0
+
+    .line 807
+    :catch_0
+    move-exception v6
+
+    .line 808
+    .local v6, "ex":Landroid/app/PendingIntent$CanceledException;
+    const-string v0, "IccSmsInterfaceManager"
+
+    const-string v1, "failed to send error result"
+
+    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_0
+
+    .line 817
+    .end local v6    # "ex":Landroid/app/PendingIntent$CanceledException;
+    :cond_2
+    new-instance v7, Landroid/os/Bundle;
+
+    invoke-direct {v7}, Landroid/os/Bundle;-><init>()V
 
     .line 818
-    .local v6, "extraInfo":Landroid/os/Bundle;
+    .local v7, "extraInfo":Landroid/os/Bundle;
     const-string v0, "recipient"
 
-    invoke-virtual {v6, v0, p2}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-virtual {v7, v0, p2}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 819
     const-string v0, "text"
 
-    invoke-virtual {v6, v0, p4}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-virtual {v7, v0, p4}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 820
     const-string v0, "sendText()"
 
-    invoke-direct {p0, v6, v0}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
+    invoke-direct {p0, v7, v0}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
 
     move-result v0
 
@@ -7005,7 +7477,7 @@
 
     move-result v0
 
-    if-eqz v0, :cond_2
+    if-eqz v0, :cond_3
 
     .line 826
     new-instance v0, Ljava/lang/StringBuilder;
@@ -7069,7 +7541,7 @@
     invoke-virtual {p0, v0}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->log(Ljava/lang/String;)V
 
     .line 830
-    :cond_2
+    :cond_3
     iget-object v0, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mAppOps:Landroid/app/AppOpsManager;
 
     invoke-static {}, Landroid/os/Binder;->getCallingUid()I
@@ -7097,11 +7569,11 @@
 
     invoke-virtual/range {v0 .. v5}, Lcom/android/internal/telephony/SMSDispatcher;->sendText(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Landroid/app/PendingIntent;Landroid/app/PendingIntent;)V
 
-    goto :goto_0
+    goto/16 :goto_0
 .end method
 
 .method public sendTextWithEncodingType(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILandroid/app/PendingIntent;Landroid/app/PendingIntent;)V
-    .locals 8
+    .locals 9
     .param p1, "callingPackage"    # Ljava/lang/String;
     .param p2, "destAddr"    # Ljava/lang/String;
     .param p3, "scAddr"    # Ljava/lang/String;
@@ -7111,8 +7583,6 @@
     .param p7, "deliveryIntent"    # Landroid/app/PendingIntent;
 
     .prologue
-    const/16 v3, 0x14
-
     .line 1695
     iget-object v0, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mPhone:Lcom/android/internal/telephony/PhoneBase;
 
@@ -7127,7 +7597,9 @@
     invoke-virtual {v0, v1, v2}, Landroid/content/Context;->enforceCallingPermission(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 1700
-    invoke-static {v3}, Landroid/app/FlymePermissionManager;->isFlymePermissionGranted(I)Z
+    const/16 v0, 0x14
+
+    invoke-static {v0}, Landroid/app/FlymePermissionManager;->isFlymePermissionGranted(I)Z
 
     move-result v0
 
@@ -7138,27 +7610,67 @@
     :goto_0
     return-void
 
-    .line 1721
+    .line 1708
     :cond_1
-    new-instance v7, Landroid/os/Bundle;
+    iget-object v0, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mContext:Landroid/content/Context;
 
-    invoke-direct {v7}, Landroid/os/Bundle;-><init>()V
+    const-string v0, "android.permission.SEND_SMS"
+
+    invoke-static {v0}, Landroid/content/Context;->isAskPermissionDenied(Ljava/lang/String;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_2
+
+    .line 1709
+    if-eqz p6, :cond_0
+
+    .line 1711
+    const/4 v0, 0x1
+
+    :try_start_0
+    invoke-virtual {p6, v0}, Landroid/app/PendingIntent;->send(I)V
+    :try_end_0
+    .catch Landroid/app/PendingIntent$CanceledException; {:try_start_0 .. :try_end_0} :catch_0
+
+    goto :goto_0
+
+    .line 1712
+    :catch_0
+    move-exception v7
+
+    .line 1713
+    .local v7, "ex":Landroid/app/PendingIntent$CanceledException;
+    const-string v0, "IccSmsInterfaceManager"
+
+    const-string v1, "failed to send error result"
+
+    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_0
+
+    .line 1721
+    .end local v7    # "ex":Landroid/app/PendingIntent$CanceledException;
+    :cond_2
+    new-instance v8, Landroid/os/Bundle;
+
+    invoke-direct {v8}, Landroid/os/Bundle;-><init>()V
 
     .line 1722
-    .local v7, "extraInfo":Landroid/os/Bundle;
+    .local v8, "extraInfo":Landroid/os/Bundle;
     const-string v0, "recipient"
 
-    invoke-virtual {v7, v0, p2}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-virtual {v8, v0, p2}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 1723
     const-string v0, "text"
 
-    invoke-virtual {v7, v0, p4}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-virtual {v8, v0, p4}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 1724
     const-string v0, "sendTextWithEncodingType()"
 
-    invoke-direct {p0, v7, v0}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
+    invoke-direct {p0, v8, v0}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
 
     move-result v0
 
@@ -7167,11 +7679,13 @@
     .line 1729
     iget-object v0, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mAppOps:Landroid/app/AppOpsManager;
 
+    const/16 v1, 0x14
+
     invoke-static {}, Landroid/os/Binder;->getCallingUid()I
 
-    move-result v1
+    move-result v2
 
-    invoke-virtual {v0, v3, v1, p1}, Landroid/app/AppOpsManager;->noteOp(IILjava/lang/String;)I
+    invoke-virtual {v0, v1, v2, p1}, Landroid/app/AppOpsManager;->noteOp(IILjava/lang/String;)I
 
     move-result v0
 
@@ -7190,7 +7704,7 @@
 
     move-object v5, p6
 
-    move-object v6, p7
+    move-object/from16 v6, p7
 
     invoke-virtual/range {v0 .. v6}, Lcom/android/internal/telephony/SMSDispatcher;->sendTextWithEncodingType(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILandroid/app/PendingIntent;Landroid/app/PendingIntent;)V
 
@@ -7198,7 +7712,7 @@
 .end method
 
 .method public sendTextWithExtraParams(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Landroid/os/Bundle;Landroid/app/PendingIntent;Landroid/app/PendingIntent;)V
-    .locals 8
+    .locals 9
     .param p1, "callingPackage"    # Ljava/lang/String;
     .param p2, "destAddr"    # Ljava/lang/String;
     .param p3, "scAddr"    # Ljava/lang/String;
@@ -7208,8 +7722,6 @@
     .param p7, "deliveryIntent"    # Landroid/app/PendingIntent;
 
     .prologue
-    const/16 v3, 0x14
-
     .line 1844
     iget-object v0, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mPhone:Lcom/android/internal/telephony/PhoneBase;
 
@@ -7224,7 +7736,9 @@
     invoke-virtual {v0, v1, v2}, Landroid/content/Context;->enforceCallingPermission(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 1849
-    invoke-static {v3}, Landroid/app/FlymePermissionManager;->isFlymePermissionGranted(I)Z
+    const/16 v0, 0x14
+
+    invoke-static {v0}, Landroid/app/FlymePermissionManager;->isFlymePermissionGranted(I)Z
 
     move-result v0
 
@@ -7235,27 +7749,67 @@
     :goto_0
     return-void
 
-    .line 1870
+    .line 1857
     :cond_1
-    new-instance v7, Landroid/os/Bundle;
+    iget-object v0, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mContext:Landroid/content/Context;
 
-    invoke-direct {v7}, Landroid/os/Bundle;-><init>()V
+    const-string v0, "android.permission.SEND_SMS"
+
+    invoke-static {v0}, Landroid/content/Context;->isAskPermissionDenied(Ljava/lang/String;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_2
+
+    .line 1858
+    if-eqz p6, :cond_0
+
+    .line 1860
+    const/4 v0, 0x1
+
+    :try_start_0
+    invoke-virtual {p6, v0}, Landroid/app/PendingIntent;->send(I)V
+    :try_end_0
+    .catch Landroid/app/PendingIntent$CanceledException; {:try_start_0 .. :try_end_0} :catch_0
+
+    goto :goto_0
+
+    .line 1861
+    :catch_0
+    move-exception v7
+
+    .line 1862
+    .local v7, "ex":Landroid/app/PendingIntent$CanceledException;
+    const-string v0, "IccSmsInterfaceManager"
+
+    const-string v1, "failed to send error result"
+
+    invoke-static {v0, v1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_0
+
+    .line 1870
+    .end local v7    # "ex":Landroid/app/PendingIntent$CanceledException;
+    :cond_2
+    new-instance v8, Landroid/os/Bundle;
+
+    invoke-direct {v8}, Landroid/os/Bundle;-><init>()V
 
     .line 1871
-    .local v7, "extraInfo":Landroid/os/Bundle;
+    .local v8, "extraInfo":Landroid/os/Bundle;
     const-string v0, "recipient"
 
-    invoke-virtual {v7, v0, p2}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-virtual {v8, v0, p2}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 1872
     const-string v0, "text"
 
-    invoke-virtual {v7, v0, p4}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-virtual {v8, v0, p4}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 1873
     const-string v0, "sendTextWithExtraParams()"
 
-    invoke-direct {p0, v7, v0}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
+    invoke-direct {p0, v8, v0}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
 
     move-result v0
 
@@ -7264,11 +7818,13 @@
     .line 1878
     iget-object v0, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mAppOps:Landroid/app/AppOpsManager;
 
+    const/16 v1, 0x14
+
     invoke-static {}, Landroid/os/Binder;->getCallingUid()I
 
-    move-result v1
+    move-result v2
 
-    invoke-virtual {v0, v3, v1, p1}, Landroid/app/AppOpsManager;->noteOp(IILjava/lang/String;)I
+    invoke-virtual {v0, v1, v2, p1}, Landroid/app/AppOpsManager;->noteOp(IILjava/lang/String;)I
 
     move-result v0
 
@@ -7287,7 +7843,7 @@
 
     move-object v5, p6
 
-    move-object v6, p7
+    move-object/from16 v6, p7
 
     invoke-virtual/range {v0 .. v6}, Lcom/android/internal/telephony/SMSDispatcher;->sendTextWithExtraParams(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Landroid/os/Bundle;Landroid/app/PendingIntent;Landroid/app/PendingIntent;)V
 
@@ -7295,7 +7851,7 @@
 .end method
 
 .method public sendTextWithPort(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILandroid/app/PendingIntent;Landroid/app/PendingIntent;)V
-    .locals 8
+    .locals 10
     .param p1, "callingPackage"    # Ljava/lang/String;
     .param p2, "destAddr"    # Ljava/lang/String;
     .param p3, "scAddr"    # Ljava/lang/String;
@@ -7305,173 +7861,221 @@
     .param p7, "deliveryIntent"    # Landroid/app/PendingIntent;
 
     .prologue
-    const/16 v3, 0x14
-
     .line 1505
-    iget-object v0, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mPhone:Lcom/android/internal/telephony/PhoneBase;
+    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mPhone:Lcom/android/internal/telephony/PhoneBase;
 
-    invoke-virtual {v0}, Lcom/android/internal/telephony/PhoneBase;->getContext()Landroid/content/Context;
+    invoke-virtual {v1}, Lcom/android/internal/telephony/PhoneBase;->getContext()Landroid/content/Context;
 
-    move-result-object v0
+    move-result-object v1
 
-    const-string v1, "android.permission.SEND_SMS"
+    const-string v2, "android.permission.SEND_SMS"
 
-    const-string v2, "Sending SMS message"
+    const-string v3, "Sending SMS message"
 
-    invoke-virtual {v0, v1, v2}, Landroid/content/Context;->enforceCallingPermission(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-virtual {v1, v2, v3}, Landroid/content/Context;->enforceCallingPermission(Ljava/lang/String;Ljava/lang/String;)V
 
     .line 1510
-    invoke-static {v3}, Landroid/app/FlymePermissionManager;->isFlymePermissionGranted(I)Z
+    const/16 v1, 0x14
 
-    move-result v0
+    invoke-static {v1}, Landroid/app/FlymePermissionManager;->isFlymePermissionGranted(I)Z
 
-    if-nez v0, :cond_1
+    move-result v1
+
+    if-nez v1, :cond_1
 
     .line 1549
     :cond_0
     :goto_0
     return-void
 
-    .line 1531
+    .line 1518
     :cond_1
-    new-instance v7, Landroid/os/Bundle;
+    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mContext:Landroid/content/Context;
 
-    invoke-direct {v7}, Landroid/os/Bundle;-><init>()V
+    const-string v1, "android.permission.SEND_SMS"
 
-    .line 1532
-    .local v7, "extraInfo":Landroid/os/Bundle;
-    const-string v0, "recipient"
-
-    invoke-virtual {v7, v0, p2}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
-
-    .line 1533
-    const-string v0, "text"
-
-    invoke-virtual {v7, v0, p4}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
-
-    .line 1534
-    const-string v0, "sendTextWithPort()"
-
-    invoke-direct {p0, v7, v0}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_0
-
-    .line 1539
-    const-string v0, "SMS"
-
-    const/4 v1, 0x2
-
-    invoke-static {v0, v1}, Landroid/telephony/Rlog;->isLoggable(Ljava/lang/String;I)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_2
-
-    .line 1540
-    new-instance v0, Ljava/lang/StringBuilder;
-
-    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v1, "sendText: destAddr="
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    invoke-virtual {v0, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    const-string v1, " scAddr="
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    invoke-virtual {v0, p3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    const-string v1, " text=\'"
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    invoke-virtual {v0, p4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    const-string v1, "\'destPort=\'"
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    invoke-virtual {v0, p5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    const-string v1, "\' sentIntent="
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    invoke-virtual {v0, p6}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    const-string v1, " deliveryIntent="
-
-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    invoke-virtual {v0, p7}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
-
-    move-result-object v0
-
-    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v0
-
-    invoke-virtual {p0, v0}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->log(Ljava/lang/String;)V
-
-    .line 1544
-    :cond_2
-    iget-object v0, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mAppOps:Landroid/app/AppOpsManager;
-
-    invoke-static {}, Landroid/os/Binder;->getCallingUid()I
+    invoke-static {v1}, Landroid/content/Context;->isAskPermissionDenied(Ljava/lang/String;)Z
 
     move-result v1
 
-    invoke-virtual {v0, v3, v1, p1}, Landroid/app/AppOpsManager;->noteOp(IILjava/lang/String;)I
+    if-eqz v1, :cond_2
 
-    move-result v0
+    .line 1519
+    if-eqz p6, :cond_0
 
-    if-nez v0, :cond_0
+    .line 1521
+    const/4 v1, 0x1
 
-    .line 1548
-    iget-object v0, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mDispatcher:Lcom/android/internal/telephony/SMSDispatcher;
+    :try_start_0
+    move-object/from16 v0, p6
 
-    move-object v1, p2
-
-    move-object v2, p3
-
-    move-object v3, p4
-
-    move v4, p5
-
-    move-object v5, p6
-
-    move-object v6, p7
-
-    invoke-virtual/range {v0 .. v6}, Lcom/android/internal/telephony/SMSDispatcher;->sendText(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILandroid/app/PendingIntent;Landroid/app/PendingIntent;)V
+    invoke-virtual {v0, v1}, Landroid/app/PendingIntent;->send(I)V
+    :try_end_0
+    .catch Landroid/app/PendingIntent$CanceledException; {:try_start_0 .. :try_end_0} :catch_0
 
     goto :goto_0
+
+    .line 1522
+    :catch_0
+    move-exception v8
+
+    .line 1523
+    .local v8, "ex":Landroid/app/PendingIntent$CanceledException;
+    const-string v1, "IccSmsInterfaceManager"
+
+    const-string v2, "failed to send error result"
+
+    invoke-static {v1, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_0
+
+    .line 1531
+    .end local v8    # "ex":Landroid/app/PendingIntent$CanceledException;
+    :cond_2
+    new-instance v9, Landroid/os/Bundle;
+
+    invoke-direct {v9}, Landroid/os/Bundle;-><init>()V
+
+    .line 1532
+    .local v9, "extraInfo":Landroid/os/Bundle;
+    const-string v1, "recipient"
+
+    invoke-virtual {v9, v1, p2}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 1533
+    const-string v1, "text"
+
+    invoke-virtual {v9, v1, p4}, Landroid/os/Bundle;->putString(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 1534
+    const-string v1, "sendTextWithPort()"
+
+    invoke-direct {p0, v9, v1}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->checkPermissionByUser(Landroid/os/Bundle;Ljava/lang/String;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_0
+
+    .line 1539
+    const-string v1, "SMS"
+
+    const/4 v2, 0x2
+
+    invoke-static {v1, v2}, Landroid/telephony/Rlog;->isLoggable(Ljava/lang/String;I)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_3
+
+    .line 1540
+    new-instance v1, Ljava/lang/StringBuilder;
+
+    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v2, "sendText: destAddr="
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v2, " scAddr="
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, p3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v2, " text=\'"
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, p4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v2, "\'destPort=\'"
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1, p5}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v2, "\' sentIntent="
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    move-object/from16 v0, p6
+
+    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    const-string v2, " deliveryIntent="
+
+    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    move-object/from16 v0, p7
+
+    invoke-virtual {v1, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {p0, v1}, Lcom/android/internal/telephony/IccSmsInterfaceManager;->log(Ljava/lang/String;)V
+
+    .line 1544
+    :cond_3
+    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mAppOps:Landroid/app/AppOpsManager;
+
+    const/16 v2, 0x14
+
+    invoke-static {}, Landroid/os/Binder;->getCallingUid()I
+
+    move-result v3
+
+    invoke-virtual {v1, v2, v3, p1}, Landroid/app/AppOpsManager;->noteOp(IILjava/lang/String;)I
+
+    move-result v1
+
+    if-nez v1, :cond_0
+
+    .line 1548
+    iget-object v1, p0, Lcom/android/internal/telephony/IccSmsInterfaceManager;->mDispatcher:Lcom/android/internal/telephony/SMSDispatcher;
+
+    move-object v2, p2
+
+    move-object v3, p3
+
+    move-object v4, p4
+
+    move v5, p5
+
+    move-object/from16 v6, p6
+
+    move-object/from16 v7, p7
+
+    invoke-virtual/range {v1 .. v7}, Lcom/android/internal/telephony/SMSDispatcher;->sendText(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILandroid/app/PendingIntent;Landroid/app/PendingIntent;)V
+
+    goto/16 :goto_0
 .end method
 
 .method public setCellBroadcastSmsConfig([Lcom/android/internal/telephony/SmsCbConfigInfo;[Lcom/android/internal/telephony/SmsCbConfigInfo;)Z

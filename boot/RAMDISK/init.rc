@@ -1160,6 +1160,13 @@ on boot
     class_start main
     class_start default
 
+#YUNOS BEGIN
+##module(AliSecurity): anti-root
+##date:2014-8-20 ##author:zilong.liuzl
+    start mtkbt
+    insmod /system/lib/alisec_mod.ko
+#YUNOS END
+
 on nonencrypted
     class_start late_start
 
@@ -2049,4 +2056,3 @@ service immvibed /system/bin/immvibed -p 99 -u 9998
     group root
     oneshot
 # End Immersion changes
-

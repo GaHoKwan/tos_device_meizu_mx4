@@ -5464,8 +5464,8 @@
     .param p4, "mode"    # I
 
     .prologue
-    .line 403
-    invoke-direct {p0, p2}, Lcom/android/server/AppOpsService;->verifyIncomingUid(I)V
+    .line 401
+    invoke-direct {p0, p2}, Lcom/android/server/AppOpsService;->verifyIncomingUidForUpdate(I)V
 
     .line 406
     invoke-direct {p0, p1}, Lcom/android/server/AppOpsService;->verifyIncomingOp(I)V

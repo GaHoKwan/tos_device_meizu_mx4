@@ -3,7 +3,7 @@ RAMDISK/sbchk/sec_chk.sh|88ed149c5c591b4db39b41d03635b34a
 RAMDISK/fstab|22df04b5571b987ab32dfb35dcf0d7f0
 RAMDISK/init.usb.rc|3c64bfb0d7dca4e218876848d1a6bd8a
 RAMDISK/seapp_contexts|10aacba4c4193fcce94fefc2d9329153
-RAMDISK/sepolicy|685dae495b9cd9c8c624441c8e19640d
+RAMDISK/sepolicy|8625b3665b2f80f159e56a16314e4607
 RAMDISK/enableswap.sh|d5f42990cd3a34c98c005ccd5157a653
 RAMDISK/property_contexts|20db237f0b05fb40f72a5924c49e86fd
 RAMDISK/init.environ.rc|0ab1abbc6511a588f3c6a68c415d8fd8
@@ -24,7 +24,7 @@ RAMDISK/default.prop|a864f7d1ab0bff6fdfe2911f8a9bebd1
 RAMDISK/init|f17de72c80d02ad8243aeb3a947789f7
 RAMDISK/fstab.fat.nand|22df04b5571b987ab32dfb35dcf0d7f0
 RAMDISK/ueventd.rc|1c9e14f31f83b026aad8823f8100390a
-RAMDISK/init.rc|597cee5cd87cdf8de3d2b4a7dbe46f64
+RAMDISK/init.rc|c1a2eb3ba7d703cff9d39f4ee4376d33
 RAMDISK/meta_init.rc|0a74a30bd4633afc057af3e40fbeba72
 RAMDISK/meta_init.project.rc|98bca27695535d34ccf0e04d6ac23877
 RAMDISK/file_contexts|52b30005e10b1a958bc8bd9658f644d1
@@ -34,4 +34,4 @@ RAMDISK/init.charging.rc|3a9e55bc31dd8a2d2451ab7eaca337a6
 RAMDISK/init.project.rc|e1ba7cda58a187fadc8471ea27373e75
 args.txt|a717bc1956c1deca05febd001ad5cf96
 type.config|2ff4bddc48bf874a20e7a08220077b4d
-kernel|80b0596e443639ce808349576ba67632
+kernel|30861242aac3fd5ebc205fa38483f492

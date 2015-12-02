@@ -23011,7 +23011,21 @@
     :cond_2
     invoke-direct {p0}, Lcom/android/server/ConnectivityService;->enforceChangePermission()V
 
+    .line 2233
+    if-eqz p1, :cond_3
+
+    iget-object v6, p0, Lcom/android/server/ConnectivityService;->mContext:Landroid/content/Context;
+
+    const-string v6, "yunos.permission.MOBILE_OPEN"
+
+    invoke-static {v6}, Landroid/content/Context;->isAskPermissionDenied(Ljava/lang/String;)Z
+
+    move-result v6
+
+    if-nez v6, :cond_0
+
     .line 2237
+    :cond_3
     const-string v6, "ro.operator.optr"
 
     invoke-static {v6}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
@@ -23031,7 +23045,7 @@
     invoke-static {v6}, Lcom/android/server/ConnectivityService;->log(Ljava/lang/String;)V
 
     .line 2312
-    if-eqz p1, :cond_3
+    if-eqz p1, :cond_4
 
     move v1, v5
 
@@ -23178,7 +23192,7 @@
 
     const/4 v10, 0x7
 
-    if-eqz p1, :cond_4
+    if-eqz p1, :cond_5
 
     move v6, v7
 
@@ -23212,7 +23226,7 @@
 
     const-string v8, "data_roaming"
 
-    if-eqz p1, :cond_5
+    if-eqz p1, :cond_6
 
     :goto_3
     invoke-static {v6, v8, v7}, Landroid/provider/Settings$Secure;->putInt(Landroid/content/ContentResolver;Ljava/lang/String;I)Z
@@ -23229,20 +23243,20 @@
     .line 2312
     .end local v1    # "setSlotId":I
     .end local v2    # "simId":Ljava/lang/Long;
-    :cond_3
+    :cond_4
     const/4 v1, -0x1
 
     goto/16 :goto_1
 
     .restart local v1    # "setSlotId":I
     .restart local v2    # "simId":Ljava/lang/Long;
-    :cond_4
+    :cond_5
     move v6, v5
 
     .line 2326
     goto :goto_2
 
-    :cond_5
+    :cond_6
     move v7, v5
 
     .line 2331
@@ -23257,7 +23271,26 @@
     .line 6503
     invoke-direct {p0}, Lcom/android/server/ConnectivityService;->enforceChangePermission()V
 
+    .line 6507
+    iget-object v0, p0, Lcom/android/server/ConnectivityService;->mContext:Landroid/content/Context;
+
+    const-string v0, "yunos.permission.MOBILE_OPEN"
+
+    invoke-static {v0}, Landroid/content/Context;->isAskPermissionDenied(Ljava/lang/String;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    .line 6508
+    const/4 v0, 0x0
+
+    .line 6545
+    :goto_0
+    return v0
+
     .line 6511
+    :cond_0
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
@@ -23281,7 +23314,7 @@
     .line 6545
     const/4 v0, 0x1
 
-    return v0
+    goto :goto_0
 .end method
 
 .method public setNetworkPreference(I)V

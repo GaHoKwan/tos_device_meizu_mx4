@@ -1702,222 +1702,45 @@
 .end method
 
 .method private static isGranted(ILjava/lang/String;II)Z
-    .locals 7
+    .locals 2
     .param p0, "privilege"    # I
     .param p1, "callingPkg"    # Ljava/lang/String;
     .param p2, "uid"    # I
     .param p3, "pid"    # I
 
     .prologue
-    const/4 v3, 0x1
+    const/4 v1, 0x1
 
     .line 252
-    sget-object v4, Landroid/os/BuildExt;->IS_M1:Ljava/lang/Boolean;
+    sget-object v0, Landroid/os/BuildExt;->IS_M1:Ljava/lang/Boolean;
 
-    invoke-virtual {v4}, Ljava/lang/Boolean;->booleanValue()Z
+    invoke-virtual {v0}, Ljava/lang/Boolean;->booleanValue()Z
 
-    move-result v4
+    move-result v0
 
-    if-nez v4, :cond_0
+    if-nez v0, :cond_0
 
-    sget-object v4, Landroid/os/BuildExt;->IS_M1_NOTE:Ljava/lang/Boolean;
+    sget-object v0, Landroid/os/BuildExt;->IS_M1_NOTE:Ljava/lang/Boolean;
 
-    invoke-virtual {v4}, Ljava/lang/Boolean;->booleanValue()Z
+    invoke-virtual {v0}, Ljava/lang/Boolean;->booleanValue()Z
 
-    move-result v4
+    move-result v0
 
-    if-eqz v4, :cond_1
+    if-eqz v0, :cond_1
 
     .line 253
     :cond_0
-    sput-boolean v3, Landroid/app/FlymePermissionManager;->ISCHECK:Z
+    sput-boolean v1, Landroid/app/FlymePermissionManager;->ISCHECK:Z
 
     .line 255
     :cond_1
-    sget-boolean v4, Landroid/app/FlymePermissionManager;->ISCHECK:Z
+    sget-boolean v0, Landroid/app/FlymePermissionManager;->ISCHECK:Z
 
-    if-eqz v4, :cond_3
+    if-eqz v0, :cond_2
 
-    .line 259
-    if-eqz p1, :cond_2
-
-    const-string/jumbo v4, "system_server"
-
-    invoke-virtual {v4, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v4
-
-    if-nez v4, :cond_2
-
-    const-string v4, "android"
-
-    invoke-virtual {v4, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v4
-
-    if-eqz v4, :cond_4
-
-    .line 261
+    .line 256
     :cond_2
-    const-string v4, "FlymePermissionManager"
-
-    const-string/jumbo v5, "special granted!"
-
-    invoke-static {v4, v5}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 291
-    :cond_3
-    :goto_0
-    return v3
-
-    .line 265
-    :cond_4
-    invoke-static {p1}, Landroid/app/FlymePermissionManager;->isSystemApp(Ljava/lang/String;)Z
-
-    move-result v4
-
-    if-nez v4, :cond_7
-
-    .line 266
-    const-string v4, "FlymePermissionManager"
-
-    const-string/jumbo v5, "third app check..."
-
-    invoke-static {v4, v5}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 269
-    :try_start_0
-    const-string v4, "flyme_permission"
-
-    invoke-static {v4}, Landroid/os/ServiceManager;->getService(Ljava/lang/String;)Landroid/os/IBinder;
-
-    move-result-object v4
-
-    invoke-static {v4}, Landroid/content/IFlymePermissionService$Stub;->asInterface(Landroid/os/IBinder;)Landroid/content/IFlymePermissionService;
-
-    move-result-object v2
-
-    .line 271
-    .local v2, "permissionService":Landroid/content/IFlymePermissionService;
-    invoke-interface {v2, p0, p2, p1}, Landroid/content/IFlymePermissionService;->noteOperation(IILjava/lang/String;)I
-
-    move-result v4
-
-    if-eqz v4, :cond_5
-
-    .line 272
-    const-string v4, "FlymePermissionManager"
-
-    new-instance v5, Ljava/lang/StringBuilder;
-
-    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v6, "Privilege Denial:  from pid="
-
-    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v5
-
-    invoke-virtual {v5, p3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
-
-    move-result-object v5
-
-    const-string v6, ", uid="
-
-    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v5
-
-    invoke-virtual {v5, p2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
-
-    move-result-object v5
-
-    const-string v6, ", pkg="
-
-    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v5
-
-    invoke-virtual {v5, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v5
-
-    invoke-virtual {v5}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v5
-
-    invoke-static {v4, v5}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 275
-    const/4 v3, 0x0
-
-    goto :goto_0
-
-    .line 278
-    :cond_5
-    const-string v4, "FlymePermissionManager"
-
-    const-string/jumbo v5, "third app granted!"
-
-    invoke-static {v4, v5}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-    :try_end_0
-    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
-
-    goto :goto_0
-
-    .line 281
-    .end local v2    # "permissionService":Landroid/content/IFlymePermissionService;
-    :catch_0
-    move-exception v1
-
-    .line 282
-    .local v1, "ex":Ljava/lang/Exception;
-    const-string v0, "ipc error"
-
-    .line 283
-    .local v0, "errmsg":Ljava/lang/String;
-    if-eqz v1, :cond_6
-
-    .line 284
-    new-instance v4, Ljava/lang/StringBuilder;
-
-    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
-
-    invoke-virtual {v4, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v4
-
-    invoke-virtual {v1}, Ljava/lang/Exception;->getMessage()Ljava/lang/String;
-
-    move-result-object v5
-
-    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v4
-
-    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v0
-
-    .line 286
-    :cond_6
-    const-string v4, "FlymePermissionManager"
-
-    invoke-static {v4, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
-    goto :goto_0
-
-    .line 290
-    .end local v0    # "errmsg":Ljava/lang/String;
-    .end local v1    # "ex":Ljava/lang/Exception;
-    :cond_7
-    const-string v4, "FlymePermissionManager"
-
-    const-string/jumbo v5, "system app allow!"
-
-    invoke-static {v4, v5}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
-    goto :goto_0
+    return v1
 .end method
 
 .method private static isSystemApp(Ljava/lang/String;)Z

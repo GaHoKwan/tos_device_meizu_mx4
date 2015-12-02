@@ -12883,7 +12883,7 @@
 
     iget-boolean v4, v0, Landroid/view/ViewRootImpl;->mApplyParallel:Z
 
-    if-eqz v4, :cond_ad
+    if-eqz v4, :cond_ac
 
     .line 2268
     invoke-static {}, Ljava/lang/Runtime;->getRuntime()Ljava/lang/Runtime;
@@ -12918,7 +12918,7 @@
 
     .line 2270
     :goto_19
-    if-eqz v39, :cond_ad
+    if-eqz v39, :cond_ac
 
     .line 2271
     const-string v4, "ViewRootImpl"
@@ -15772,7 +15772,7 @@
 
     move/from16 v0, v49
 
-    if-eq v0, v4, :cond_a3
+    if-eq v0, v4, :cond_a2
 
     .line 2724
     move/from16 v0, v49
@@ -15828,7 +15828,7 @@
 
     iget-boolean v4, v0, Landroid/view/ViewRootImpl;->mHasHadWindowFocus:Z
 
-    if-nez v4, :cond_a2
+    if-nez v4, :cond_a1
 
     const/16 v21, 0x1
 
@@ -15871,7 +15871,7 @@
 
     if-nez v4, :cond_8f
 
-    if-eqz v76, :cond_a5
+    if-eqz v76, :cond_a4
 
     :cond_8f
     const/16 v28, 0x1
@@ -16000,9 +16000,9 @@
 
     .line 2762
     :cond_90
-    if-nez v28, :cond_aa
+    if-nez v28, :cond_a9
 
-    if-nez v60, :cond_aa
+    if-nez v60, :cond_a9
 
     .line 2763
     if-eqz v71, :cond_91
@@ -16011,7 +16011,7 @@
 
     iget-boolean v4, v0, Landroid/view/ViewRootImpl;->mReportNextDraw:Z
 
-    if-eqz v4, :cond_a8
+    if-eqz v4, :cond_a7
 
     .line 2764
     :cond_91
@@ -16019,7 +16019,7 @@
 
     iget-object v4, v0, Landroid/view/ViewRootImpl;->mPendingTransitions:Ljava/util/ArrayList;
 
-    if-eqz v4, :cond_a7
+    if-eqz v4, :cond_a6
 
     move-object/from16 v0, p0
 
@@ -16029,7 +16029,7 @@
 
     move-result v4
 
-    if-lez v4, :cond_a7
+    if-lez v4, :cond_a6
 
     .line 2765
     const/16 v47, 0x0
@@ -16046,7 +16046,7 @@
 
     move/from16 v0, v47
 
-    if-ge v0, v4, :cond_a6
+    if-ge v0, v4, :cond_a5
 
     .line 2766
     move-object/from16 v0, p0
@@ -16520,10 +16520,9 @@
 
     and-int/2addr v4, v11
 
-    if-eqz v4, :cond_a1
+    if-nez v4, :cond_8c
 
     .line 2690
-    :cond_a1
     move-object/from16 v0, p0
 
     iget-boolean v4, v0, Landroid/view/ViewRootImpl;->mWindowsAnimating:Z
@@ -16539,14 +16538,14 @@
     .restart local v17    # "imm":Landroid/view/inputmethod/InputMethodManager;
     .restart local v49    # "imTarget":Z
     .restart local v53    # "lastRootAsFocus":Landroid/view/View;
-    :cond_a2
+    :cond_a1
     const/16 v21, 0x0
 
     goto/16 :goto_2c
 
     .line 2733
     .end local v17    # "imm":Landroid/view/inputmethod/InputMethodManager;
-    :cond_a3
+    :cond_a2
     invoke-static {}, Landroid/view/inputmethod/InputMethodManager;->peekInstance()Landroid/view/inputmethod/InputMethodManager;
 
     move-result-object v17
@@ -16574,7 +16573,7 @@
 
     move-object/from16 v0, v53
 
-    if-eq v0, v4, :cond_a4
+    if-eq v0, v4, :cond_a3
 
     .line 2736
     const-string v4, "ViewRootImpl"
@@ -16619,7 +16618,7 @@
     invoke-virtual {v0, v4}, Landroid/view/inputmethod/InputMethodManager;->focusIn(Landroid/view/View;)V
 
     .line 2739
-    :cond_a4
+    :cond_a3
     move-object/from16 v0, p0
 
     iget-object v4, v0, Landroid/view/ViewRootImpl;->mView:Landroid/view/View;
@@ -16633,7 +16632,7 @@
     .line 2752
     .end local v17    # "imm":Landroid/view/inputmethod/InputMethodManager;
     .end local v49    # "imTarget":Z
-    :cond_a5
+    :cond_a4
     const/16 v28, 0x0
 
     goto/16 :goto_2e
@@ -16641,7 +16640,7 @@
     .line 2768
     .restart local v28    # "cancelDraw":Z
     .restart local v47    # "i":I
-    :cond_a6
+    :cond_a5
     move-object/from16 v0, p0
 
     iget-object v4, v0, Landroid/view/ViewRootImpl;->mPendingTransitions:Ljava/util/ArrayList;
@@ -16650,29 +16649,29 @@
 
     .line 2771
     .end local v47    # "i":I
-    :cond_a7
+    :cond_a6
     invoke-direct/range {p0 .. p0}, Landroid/view/ViewRootImpl;->performDraw()V
 
     .line 2772
     invoke-direct/range {p0 .. p0}, Landroid/view/ViewRootImpl;->performBlurGlass()V
 
     .line 2785
-    :cond_a8
+    :cond_a7
     :goto_32
     sget-boolean v4, Landroid/view/ViewRootImpl;->DEBUG_DRAW:Z
 
-    if-nez v4, :cond_a9
+    if-nez v4, :cond_a8
 
     sget-boolean v4, Landroid/view/ViewRootImpl;->DEBUG_LIFECYCLE:Z
 
-    if-nez v4, :cond_a9
+    if-nez v4, :cond_a8
 
     sget-boolean v4, Landroid/view/ViewRootImpl;->DEBUG_DEFAULT:Z
 
-    if-eqz v4, :cond_a9
+    if-eqz v4, :cond_a8
 
     .line 2789
-    :cond_a9
+    :cond_a8
     const/4 v4, 0x0
 
     move-object/from16 v0, p0
@@ -16682,8 +16681,8 @@
     goto/16 :goto_0
 
     .line 2775
-    :cond_aa
-    if-nez v76, :cond_ab
+    :cond_a9
+    if-nez v76, :cond_aa
 
     .line 2777
     invoke-virtual/range {p0 .. p0}, Landroid/view/ViewRootImpl;->scheduleTraversals()V
@@ -16691,12 +16690,12 @@
     goto :goto_32
 
     .line 2778
-    :cond_ab
+    :cond_aa
     move-object/from16 v0, p0
 
     iget-object v4, v0, Landroid/view/ViewRootImpl;->mPendingTransitions:Ljava/util/ArrayList;
 
-    if-eqz v4, :cond_a8
+    if-eqz v4, :cond_a7
 
     move-object/from16 v0, p0
 
@@ -16706,7 +16705,7 @@
 
     move-result v4
 
-    if-lez v4, :cond_a8
+    if-lez v4, :cond_a7
 
     .line 2779
     const/16 v47, 0x0
@@ -16723,7 +16722,7 @@
 
     move/from16 v0, v47
 
-    if-ge v0, v4, :cond_ac
+    if-ge v0, v4, :cond_ab
 
     .line 2780
     move-object/from16 v0, p0
@@ -16746,7 +16745,7 @@
     goto :goto_33
 
     .line 2782
-    :cond_ac
+    :cond_ab
     move-object/from16 v0, p0
 
     iget-object v4, v0, Landroid/view/ViewRootImpl;->mPendingTransitions:Ljava/util/ArrayList;
@@ -16769,7 +16768,7 @@
     .restart local v64    # "r":Ljava/lang/Runnable;
     .restart local v74    # "surfaceGenerationId":I
     .restart local v78    # "visibleInsetsChanged":Z
-    :cond_ad
+    :cond_ac
     move-object/from16 v10, v64
 
     .end local v64    # "r":Ljava/lang/Runnable;
@@ -26901,41 +26900,11 @@
 
     throw v3
 
-    .line 785
+    .line 782
     :pswitch_6
-    new-instance v3, Landroid/view/WindowManager$BadTokenException;
+    monitor-exit p0
 
-    new-instance v4, Ljava/lang/StringBuilder;
-
-    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v5, "Unable to add window "
-
-    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v4
-
-    move-object/from16 v0, p0
-
-    iget-object v5, v0, Landroid/view/ViewRootImpl;->mWindow:Landroid/view/ViewRootImpl$W;
-
-    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
-
-    move-result-object v4
-
-    const-string v5, " -- permission denied for this window type"
-
-    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v4
-
-    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v4
-
-    invoke-direct {v3, v4}, Landroid/view/WindowManager$BadTokenException;-><init>(Ljava/lang/String;)V
-
-    throw v3
+    goto :goto_2
 
     .line 789
     :pswitch_7
@@ -27357,8 +27326,6 @@
     goto/16 :goto_4
 
     .line 750
-    nop
-
     :pswitch_data_0
     .packed-switch -0xa
         :pswitch_8

@@ -766,9 +766,18 @@
     :try_end_1d
     .catch Ljava/lang/Throwable; {:try_start_1d .. :try_end_1d} :catch_1d
 
-    .line 1658
+    .line 1655
     :cond_22
     :goto_1e
+    invoke-static {}, Lcom/android/server/AliSystemServiceHelper;->get()Lcom/android/server/AliSystemServiceHelper;
+
+    move-result-object v1
+
+    iget-object v2, p0, Lcom/android/server/ServerThread$2;->val$contextF:Landroid/content/Context;
+
+    invoke-virtual {v1, v2}, Lcom/android/server/AliSystemServiceHelper;->systemReady(Landroid/content/Context;)V
+
+    .line 1658
     return-void
 
     .line 1456

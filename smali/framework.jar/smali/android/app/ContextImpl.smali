@@ -638,6 +638,15 @@
 
     invoke-static {v0, v1}, Landroid/app/ContextImpl;->registerService(Ljava/lang/String;Landroid/app/ContextImpl$ServiceFetcher;)V
 
+    .line 768
+    const-string v0, "TyidService"
+
+    new-instance v1, Landroid/app/ContextImpl$55;
+
+    invoke-direct {v1}, Landroid/app/ContextImpl$55;-><init>()V
+
+    invoke-static {v0, v1}, Landroid/app/ContextImpl;->registerService(Ljava/lang/String;Landroid/app/ContextImpl$ServiceFetcher;)V
+
     .line 775
     return-void
 .end method

@@ -1,3 +1,3 @@
-post-build=Meizu/meizu_mx4/mx4:4.4.2/KOT49H/m75.Flyme_OS_4.2.8.2.20150422020016:user/release-keys
-post-timestamp=1429641483
-pre-device=mx4
+post-build=Meizu/mx4/M460A:4.4.2/KOT49H/m75.Flyme_OS_4.2.8.2.20150423172506:user/release-keys
+post-timestamp=1429782940
+pre-device=M460A

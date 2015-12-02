@@ -295,8 +295,25 @@
     :goto_0
     return-object v5
 
-    .line 103
+    .line 96
     :cond_0
+    iget-object v5, p0, Lcom/android/internal/telephony/PhoneSubInfo;->mContext:Landroid/content/Context;
+
+    const-string v5, "yunos.permission.DEVICE_ID"
+
+    invoke-static {v5}, Landroid/content/Context;->isAskPermissionDenied(Ljava/lang/String;)Z
+
+    move-result v5
+
+    if-eqz v5, :cond_1
+
+    .line 97
+    const-string v5, ""
+
+    goto :goto_0
+
+    .line 103
+    :cond_1
     const-string v5, "Try to get IMEI"
 
     invoke-direct {p0, v5}, Lcom/android/internal/telephony/PhoneSubInfo;->log(Ljava/lang/String;)V
@@ -331,7 +348,7 @@
 
     .line 109
     .local v4, "result":I
-    if-eqz v4, :cond_1
+    if-eqz v4, :cond_2
 
     .line 110
     new-instance v5, Ljava/lang/StringBuilder;
@@ -366,7 +383,7 @@
     goto :goto_0
 
     .line 113
-    :cond_1
+    :cond_2
     const-string v5, "Get IMEI permission granted"
 
     invoke-direct {p0, v5}, Lcom/android/internal/telephony/PhoneSubInfo;->log(Ljava/lang/String;)V
@@ -458,14 +475,32 @@
 
     invoke-virtual {v0, v1, v2}, Landroid/content/Context;->enforceCallingOrSelfPermission(Ljava/lang/String;Ljava/lang/String;)V
 
+    .line 176
+    iget-object v0, p0, Lcom/android/internal/telephony/PhoneSubInfo;->mContext:Landroid/content/Context;
+
+    const-string v0, "yunos.permission.DEVICE_ID"
+
+    invoke-static {v0}, Landroid/content/Context;->isAskPermissionDenied(Ljava/lang/String;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    .line 177
+    const-string v0, ""
+
     .line 181
+    :goto_0
+    return-object v0
+
+    :cond_0
     iget-object v0, p0, Lcom/android/internal/telephony/PhoneSubInfo;->mPhone:Lcom/android/internal/telephony/Phone;
 
     invoke-interface {v0}, Lcom/android/internal/telephony/Phone;->getIccSerialNumber()Ljava/lang/String;
 
     move-result-object v0
 
-    return-object v0
+    goto :goto_0
 .end method
 
 .method public getIsimDomain()Ljava/lang/String;
@@ -637,7 +672,25 @@
     :goto_0
     return-object v0
 
+    .line 200
     :cond_0
+    iget-object v0, p0, Lcom/android/internal/telephony/PhoneSubInfo;->mContext:Landroid/content/Context;
+
+    const-string v0, "yunos.permission.DEVICE_ID"
+
+    invoke-static {v0}, Landroid/content/Context;->isAskPermissionDenied(Ljava/lang/String;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_1
+
+    .line 201
+    const-string v0, ""
+
+    goto :goto_0
+
+    .line 205
+    :cond_1
     iget-object v0, p0, Lcom/android/internal/telephony/PhoneSubInfo;->mPhone:Lcom/android/internal/telephony/Phone;
 
     invoke-interface {v0}, Lcom/android/internal/telephony/Phone;->getLine1Number()Ljava/lang/String;
@@ -699,7 +752,25 @@
     :goto_0
     return-object v0
 
+    .line 150
     :cond_0
+    iget-object v0, p0, Lcom/android/internal/telephony/PhoneSubInfo;->mContext:Landroid/content/Context;
+
+    const-string v0, "yunos.permission.DEVICE_ID"
+
+    invoke-static {v0}, Landroid/content/Context;->isAskPermissionDenied(Ljava/lang/String;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_1
+
+    .line 151
+    const-string v0, ""
+
+    goto :goto_0
+
+    .line 155
+    :cond_1
     iget-object v0, p0, Lcom/android/internal/telephony/PhoneSubInfo;->mPhone:Lcom/android/internal/telephony/Phone;
 
     invoke-interface {v0}, Lcom/android/internal/telephony/Phone;->getSubscriberId()Ljava/lang/String;

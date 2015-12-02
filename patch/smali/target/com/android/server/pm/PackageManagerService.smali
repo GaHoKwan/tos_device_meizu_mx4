@@ -4845,16 +4845,17 @@
     return-object v0
 .end method
 
-.method static synthetic access$5200(Lcom/android/server/pm/PackageManagerService;Ljava/lang/String;II)I
+.method static synthetic access$5200(Lcom/android/server/pm/PackageManagerService;Ljava/lang/String;III)I
     .locals 1
     .param p0, "x0"    # Lcom/android/server/pm/PackageManagerService;
     .param p1, "x1"    # Ljava/lang/String;
     .param p2, "x2"    # I
     .param p3, "x3"    # I
+    .param p4, "x4"    # I
 
     .prologue
     .line 205
-    invoke-direct {p0, p1, p2, p3}, Lcom/android/server/pm/PackageManagerService;->deletePackageX(Ljava/lang/String;II)I
+    invoke-direct {p0, p1, p2, p3, p4}, Lcom/android/server/pm/PackageManagerService;->deletePackageX(Ljava/lang/String;III)I
 
     move-result v0
 

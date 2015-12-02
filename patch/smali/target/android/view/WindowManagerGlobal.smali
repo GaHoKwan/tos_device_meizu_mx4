@@ -886,7 +886,7 @@
     .catch Ljava/lang/RuntimeException; {:try_start_2 .. :try_end_2} :catch_0
 
     .line 291
-    :goto_1
+    :cond_9
     return-void
 
     .line 272
@@ -908,7 +908,7 @@
     move-result v4
 
     .line 276
-    if-ltz v4, :cond_9
+    if-ltz v4, :cond_a
 
     .line 277
     const/4 v8, 0x1
@@ -916,17 +916,36 @@
     invoke-direct {p0, v4, v8}, Landroid/view/WindowManagerGlobal;->removeViewLocked(IZ)V
 
     .line 279
-    :cond_9
-    monitor-exit v9
-
-    goto :goto_1
-
-    :catchall_1
-    move-exception v8
-
+    :cond_a
     monitor-exit v9
     :try_end_3
     .catchall {:try_start_3 .. :try_end_3} :catchall_1
+
+    .line 284
+    instance-of v8, v2, Landroid/view/WindowManager$BadTokenException;
+
+    if-eqz v8, :cond_b
+
+    move-object v8, v2
+
+    check-cast v8, Landroid/view/WindowManager$BadTokenException;
+
+    iget-boolean v8, v8, Landroid/view/WindowManager$BadTokenException;->slient:Z
+
+    if-nez v8, :cond_9
+
+    .line 286
+    :cond_b
+    throw v2
+
+    .line 279
+    :catchall_1
+    move-exception v8
+
+    :try_start_4
+    monitor-exit v9
+    :try_end_4
+    .catchall {:try_start_4 .. :try_end_4} :catchall_1
 
     throw v8
 .end method
@@ -2045,16 +2064,27 @@
     .line 323
     const/4 v1, 0x0
 
-    .line 330
+    .line 325
     .local v1, "index":I
-    const/4 v2, 0x1
+    const/4 v2, 0x0
 
     :try_start_0
     invoke-direct {p0, p1, v2}, Landroid/view/WindowManagerGlobal;->findViewLocked(Landroid/view/View;Z)I
 
     move-result v1
 
+    .line 326
+    if-gez v1, :cond_1
+
+    .line 327
+    monitor-exit v3
+
+    .line 336
+    :goto_0
+    return-void
+
     .line 333
+    :cond_1
     iget-object v2, p0, Landroid/view/WindowManagerGlobal;->mRoots:Ljava/util/ArrayList;
 
     invoke-virtual {v2, v1}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -2072,15 +2102,28 @@
     invoke-direct {p0, v1, p2}, Landroid/view/WindowManagerGlobal;->removeViewLocked(IZ)V
 
     .line 335
-    if-ne v0, p1, :cond_1
+    if-ne v0, p1, :cond_2
 
     .line 336
     monitor-exit v3
 
-    return-void
+    goto :goto_0
+
+    .line 341
+    .end local v0    # "curView":Landroid/view/View;
+    :catchall_0
+    move-exception v2
+
+    monitor-exit v3
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    throw v2
 
     .line 339
-    :cond_1
+    .restart local v0    # "curView":Landroid/view/View;
+    :cond_2
+    :try_start_1
     new-instance v2, Ljava/lang/IllegalStateException;
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -2114,17 +2157,8 @@
     invoke-direct {v2, v4}, Ljava/lang/IllegalStateException;-><init>(Ljava/lang/String;)V
 
     throw v2
-
-    .line 341
-    .end local v0    # "curView":Landroid/view/View;
-    :catchall_0
-    move-exception v2
-
-    monitor-exit v3
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    throw v2
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
 .end method
 
 .method public reportNewConfiguration(Landroid/content/res/Configuration;)V

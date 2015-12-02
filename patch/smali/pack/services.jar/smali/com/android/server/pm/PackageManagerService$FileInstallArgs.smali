@@ -181,6 +181,9 @@
 
     iput-boolean v0, p0, Lcom/android/server/pm/PackageManagerService$FileInstallArgs;->created:Z
 
+    .line 8553
+    invoke-virtual {p0, p2}, Lcom/android/server/pm/PackageManagerService$FileInstallArgs;->setInstallParams(Lcom/android/server/pm/PackageManagerService$InstallParams;)V
+
     .line 8556
     return-void
 .end method

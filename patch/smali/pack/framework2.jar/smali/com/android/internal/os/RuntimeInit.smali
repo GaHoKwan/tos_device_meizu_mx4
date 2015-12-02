@@ -108,13 +108,6 @@
 
     invoke-virtual {v2, v3}, Ldalvik/system/VMRuntime;->setTargetHeapUtilization(F)F
 
-    .line 312
-    invoke-static {}, Ldalvik/system/VMRuntime;->getRuntime()Ldalvik/system/VMRuntime;
-
-    move-result-object v2
-
-    invoke-virtual {v2, p0}, Ldalvik/system/VMRuntime;->setTargetSdkVersion(I)V
-
     .line 318
     :try_start_0
     new-instance v0, Lcom/android/internal/os/RuntimeInit$Arguments;

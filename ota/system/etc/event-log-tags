@@ -205,7 +205,6 @@
 80310 bionic_event_resolver_wrong_query (uid|1)
 90100 exp_det_cert_pin_failure (certs|4)
 90200 lock_screen_type (type|3)
-90300 install_package_attempt (result_and_flags|1),(total_time|1|3),(time_till_pkg_info_obtained|1|3),(time_till_install_clicked|1|3),(package_digest|3)
 201001 system_update (status|1|5),(download_result|1|5),(bytes|2|2),(url|3)
 201002 system_update_user (action|3)
 202001 vending_reconstruct (changes|1)

@@ -117,6 +117,9 @@
 
     invoke-direct/range {v0 .. v6}, Lcom/android/server/pm/PackageManagerService$InstallArgs;-><init>(Landroid/net/Uri;Landroid/content/pm/IPackageInstallObserver;ILjava/lang/String;Landroid/content/pm/ManifestDigest;Landroid/os/UserHandle;)V
 
+    .line 8921
+    invoke-virtual {p0, p2}, Lcom/android/server/pm/PackageManagerService$AsecInstallArgs;->setInstallParams(Lcom/android/server/pm/PackageManagerService$InstallParams;)V
+
     .line 8924
     return-void
 .end method

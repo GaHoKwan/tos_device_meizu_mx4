@@ -144,7 +144,22 @@
     return v0
 .end method
 
-.method static synthetic access$100(Landroid/content/ContentProvider;Ljava/lang/String;)Ljava/lang/String;
+.method static synthetic access$100(Landroid/content/ContentProvider;Landroid/net/Uri;Z)Z
+    .locals 1
+    .param p0, "x0"    # Landroid/content/ContentProvider;
+    .param p1, "x1"    # Landroid/net/Uri;
+    .param p2, "x2"    # Z
+
+    .prologue
+    .line 116
+    invoke-direct {p0, p1, p2}, Landroid/content/ContentProvider;->isOperationPermissionDenied(Landroid/net/Uri;Z)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method static synthetic access$200(Landroid/content/ContentProvider;Ljava/lang/String;)Ljava/lang/String;
     .locals 1
     .param p0, "x0"    # Landroid/content/ContentProvider;
     .param p1, "x1"    # Ljava/lang/String;

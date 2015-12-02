@@ -3662,6 +3662,9 @@
     .param p1, "chain"    # Ljava/lang/String;
 
     .prologue
+    .line 2409
+    invoke-static {}, Lcom/android/server/NetworkManagementService;->enforceSystemUid()V
+
     .line 2413
     :try_start_0
     iget-object v1, p0, Lcom/android/server/NetworkManagementService;->mConnector:Lcom/android/server/NativeDaemonConnector;
@@ -9419,6 +9422,9 @@
 
     .prologue
     const/4 v5, 0x1
+
+    .line 2379
+    invoke-static {}, Lcom/android/server/NetworkManagementService;->enforceSystemUid()V
 
     .line 2382
     const-string v0, "mobile"

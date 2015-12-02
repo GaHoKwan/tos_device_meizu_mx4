@@ -3612,6 +3612,17 @@
 
     invoke-virtual {v1, v2, v3}, Landroid/content/Context;->enforceCallingOrSelfPermission(Ljava/lang/String;Ljava/lang/String;)V
 
+    .line 505
+    iget-object v1, p0, Lcom/android/server/BluetoothManagerService;->mContext:Landroid/content/Context;
+
+    const-string v1, "yunos.permission.BT_OPEN"
+
+    invoke-static {v1}, Landroid/content/Context;->isAskPermissionDenied(Ljava/lang/String;)Z
+
+    move-result v1
+
+    if-nez v1, :cond_0
+
     .line 511
     const-string v1, "BluetoothManagerService"
 

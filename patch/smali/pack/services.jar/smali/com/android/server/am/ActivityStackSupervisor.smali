@@ -7457,7 +7457,7 @@
 .end method
 
 .method resolveActivity(Landroid/content/Intent;Ljava/lang/String;ILjava/lang/String;Landroid/os/ParcelFileDescriptor;I)Landroid/content/pm/ActivityInfo;
-    .locals 9
+    .locals 12
     .param p1, "intent"    # Landroid/content/Intent;
     .param p2, "resolvedType"    # Ljava/lang/String;
     .param p3, "startFlags"    # I
@@ -7466,161 +7466,245 @@
     .param p6, "userId"    # I
 
     .prologue
-    const/4 v5, 0x1
-
-    const/4 v3, 0x0
-
     .line 639
     :try_start_0
     invoke-static {}, Landroid/app/AppGlobals;->getPackageManager()Landroid/content/pm/IPackageManager;
 
-    move-result-object v0
+    move-result-object v1
 
-    const v1, 0x10400
+    const v2, 0x10400
 
-    invoke-interface {v0, p1, p2, v1, p6}, Landroid/content/pm/IPackageManager;->resolveIntent(Landroid/content/Intent;Ljava/lang/String;II)Landroid/content/pm/ResolveInfo;
+    move/from16 v0, p6
 
-    move-result-object v8
+    invoke-interface {v1, p1, p2, v2, v0}, Landroid/content/pm/IPackageManager;->resolveIntent(Landroid/content/Intent;Ljava/lang/String;II)Landroid/content/pm/ResolveInfo;
+
+    move-result-object v10
 
     .line 644
-    .local v8, "rInfo":Landroid/content/pm/ResolveInfo;
-    if-eqz v8, :cond_3
+    .local v10, "rInfo":Landroid/content/pm/ResolveInfo;
+    if-eqz v10, :cond_4
 
-    iget-object v6, v8, Landroid/content/pm/ResolveInfo;->activityInfo:Landroid/content/pm/ActivityInfo;
+    iget-object v7, v10, Landroid/content/pm/ResolveInfo;->activityInfo:Landroid/content/pm/ActivityInfo;
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
     .line 649
-    .end local v8    # "rInfo":Landroid/content/pm/ResolveInfo;
-    .local v6, "aInfo":Landroid/content/pm/ActivityInfo;
+    .end local v10    # "rInfo":Landroid/content/pm/ResolveInfo;
+    .local v7, "aInfo":Landroid/content/pm/ActivityInfo;
     :goto_0
-    if-eqz v6, :cond_2
+    if-eqz v7, :cond_3
 
     .line 654
-    new-instance v0, Landroid/content/ComponentName;
+    new-instance v1, Landroid/content/ComponentName;
 
-    iget-object v1, v6, Landroid/content/pm/ActivityInfo;->applicationInfo:Landroid/content/pm/ApplicationInfo;
+    iget-object v2, v7, Landroid/content/pm/ActivityInfo;->applicationInfo:Landroid/content/pm/ApplicationInfo;
 
-    iget-object v1, v1, Landroid/content/pm/ApplicationInfo;->packageName:Ljava/lang/String;
+    iget-object v2, v2, Landroid/content/pm/ApplicationInfo;->packageName:Ljava/lang/String;
 
-    iget-object v2, v6, Landroid/content/pm/ActivityInfo;->name:Ljava/lang/String;
+    iget-object v3, v7, Landroid/content/pm/ActivityInfo;->name:Ljava/lang/String;
 
-    invoke-direct {v0, v1, v2}, Landroid/content/ComponentName;-><init>(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-direct {v1, v2, v3}, Landroid/content/ComponentName;-><init>(Ljava/lang/String;Ljava/lang/String;)V
 
-    invoke-virtual {p1, v0}, Landroid/content/Intent;->setComponent(Landroid/content/ComponentName;)Landroid/content/Intent;
+    invoke-virtual {p1, v1}, Landroid/content/Intent;->setComponent(Landroid/content/ComponentName;)Landroid/content/Intent;
+
+    .line 661
+    iget-object v1, p0, Lcom/android/server/am/ActivityStackSupervisor;->mContext:Landroid/content/Context;
+
+    invoke-static {v1}, Lcom/aliyun/ams/secure/SecureManager;->get(Landroid/content/Context;)Lcom/aliyun/ams/secure/SecureManager;
+
+    move-result-object v11
+
+    .line 662
+    .local v11, "secure":Lcom/aliyun/ams/secure/SecureManager;
+    if-eqz v11, :cond_0
+
+    .line 663
+    invoke-virtual {v11, p1}, Lcom/aliyun/ams/secure/SecureManager;->filterSyncIntent(Landroid/content/Intent;)Z
+
+    move-result v9
+
+    .line 664
+    .local v9, "isBlocked":Z
+    if-eqz v9, :cond_0
+
+    .line 667
+    :try_start_1
+    invoke-static {}, Landroid/app/AppGlobals;->getPackageManager()Landroid/content/pm/IPackageManager;
+
+    move-result-object v1
+
+    const v2, 0x10400
+
+    move/from16 v0, p6
+
+    invoke-interface {v1, p1, p2, v2, v0}, Landroid/content/pm/IPackageManager;->resolveIntent(Landroid/content/Intent;Ljava/lang/String;II)Landroid/content/pm/ResolveInfo;
+
+    move-result-object v10
+
+    .line 671
+    .restart local v10    # "rInfo":Landroid/content/pm/ResolveInfo;
+    if-eqz v10, :cond_5
+
+    iget-object v7, v10, Landroid/content/pm/ResolveInfo;->activityInfo:Landroid/content/pm/ActivityInfo;
+
+    .line 672
+    :goto_1
+    const/16 v1, 0x20
+
+    iput v1, v7, Landroid/content/pm/ActivityInfo;->flags:I
+    :try_end_1
+    .catch Landroid/os/RemoteException; {:try_start_1 .. :try_end_1} :catch_1
 
     .line 683
-    and-int/lit8 v0, p3, 0x2
+    .end local v9    # "isBlocked":Z
+    .end local v10    # "rInfo":Landroid/content/pm/ResolveInfo;
+    :cond_0
+    and-int/lit8 v1, p3, 0x2
 
-    if-eqz v0, :cond_0
+    if-eqz v1, :cond_1
 
     .line 684
-    iget-object v0, v6, Landroid/content/pm/ActivityInfo;->processName:Ljava/lang/String;
+    iget-object v1, v7, Landroid/content/pm/ActivityInfo;->processName:Ljava/lang/String;
 
-    const-string v1, "system"
+    const-string v2, "system"
 
-    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    invoke-virtual {v1, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
-    move-result v0
+    move-result v1
 
-    if-nez v0, :cond_0
+    if-nez v1, :cond_1
 
     .line 685
-    iget-object v0, p0, Lcom/android/server/am/ActivityStackSupervisor;->mService:Lcom/android/server/am/ActivityManagerService;
+    iget-object v1, p0, Lcom/android/server/am/ActivityStackSupervisor;->mService:Lcom/android/server/am/ActivityManagerService;
 
-    iget-object v1, v6, Landroid/content/pm/ActivityInfo;->processName:Ljava/lang/String;
+    iget-object v2, v7, Landroid/content/pm/ActivityInfo;->processName:Ljava/lang/String;
 
-    invoke-virtual {v0, v1, v5, v3}, Lcom/android/server/am/ActivityManagerService;->setDebugApp(Ljava/lang/String;ZZ)V
+    const/4 v3, 0x1
+
+    const/4 v4, 0x0
+
+    invoke-virtual {v1, v2, v3, v4}, Lcom/android/server/am/ActivityManagerService;->setDebugApp(Ljava/lang/String;ZZ)V
 
     .line 689
-    :cond_0
-    and-int/lit8 v0, p3, 0x4
+    :cond_1
+    and-int/lit8 v1, p3, 0x4
 
-    if-eqz v0, :cond_1
+    if-eqz v1, :cond_2
 
     .line 690
-    iget-object v0, v6, Landroid/content/pm/ActivityInfo;->processName:Ljava/lang/String;
+    iget-object v1, v7, Landroid/content/pm/ActivityInfo;->processName:Ljava/lang/String;
 
-    const-string v1, "system"
+    const-string v2, "system"
 
-    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    invoke-virtual {v1, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
-    move-result v0
+    move-result v1
 
-    if-nez v0, :cond_1
+    if-nez v1, :cond_2
 
     .line 691
-    iget-object v0, p0, Lcom/android/server/am/ActivityStackSupervisor;->mService:Lcom/android/server/am/ActivityManagerService;
+    iget-object v1, p0, Lcom/android/server/am/ActivityStackSupervisor;->mService:Lcom/android/server/am/ActivityManagerService;
 
-    iget-object v1, v6, Landroid/content/pm/ActivityInfo;->applicationInfo:Landroid/content/pm/ApplicationInfo;
+    iget-object v2, v7, Landroid/content/pm/ActivityInfo;->applicationInfo:Landroid/content/pm/ApplicationInfo;
 
-    iget-object v2, v6, Landroid/content/pm/ActivityInfo;->processName:Ljava/lang/String;
+    iget-object v3, v7, Landroid/content/pm/ActivityInfo;->processName:Ljava/lang/String;
 
-    invoke-virtual {v0, v1, v2}, Lcom/android/server/am/ActivityManagerService;->setOpenGlTraceApp(Landroid/content/pm/ApplicationInfo;Ljava/lang/String;)V
+    invoke-virtual {v1, v2, v3}, Lcom/android/server/am/ActivityManagerService;->setOpenGlTraceApp(Landroid/content/pm/ApplicationInfo;Ljava/lang/String;)V
 
     .line 695
-    :cond_1
-    if-eqz p4, :cond_2
+    :cond_2
+    if-eqz p4, :cond_3
 
     .line 696
-    iget-object v0, v6, Landroid/content/pm/ActivityInfo;->processName:Ljava/lang/String;
+    iget-object v1, v7, Landroid/content/pm/ActivityInfo;->processName:Ljava/lang/String;
 
-    const-string v1, "system"
+    const-string v2, "system"
 
-    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    invoke-virtual {v1, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
-    move-result v0
+    move-result v1
 
-    if-nez v0, :cond_2
+    if-nez v1, :cond_3
 
     .line 697
-    iget-object v0, p0, Lcom/android/server/am/ActivityStackSupervisor;->mService:Lcom/android/server/am/ActivityManagerService;
+    iget-object v1, p0, Lcom/android/server/am/ActivityStackSupervisor;->mService:Lcom/android/server/am/ActivityManagerService;
 
-    iget-object v1, v6, Landroid/content/pm/ActivityInfo;->applicationInfo:Landroid/content/pm/ApplicationInfo;
+    iget-object v2, v7, Landroid/content/pm/ActivityInfo;->applicationInfo:Landroid/content/pm/ApplicationInfo;
 
-    iget-object v2, v6, Landroid/content/pm/ActivityInfo;->processName:Ljava/lang/String;
+    iget-object v3, v7, Landroid/content/pm/ActivityInfo;->processName:Ljava/lang/String;
 
     and-int/lit8 v4, p3, 0x8
 
-    if-eqz v4, :cond_4
+    if-eqz v4, :cond_6
 
-    :goto_1
-    move-object v3, p4
+    const/4 v6, 0x1
 
-    move-object v4, p5
+    :goto_2
+    move-object/from16 v4, p4
 
-    invoke-virtual/range {v0 .. v5}, Lcom/android/server/am/ActivityManagerService;->setProfileApp(Landroid/content/pm/ApplicationInfo;Ljava/lang/String;Ljava/lang/String;Landroid/os/ParcelFileDescriptor;Z)V
+    move-object/from16 v5, p5
+
+    invoke-virtual/range {v1 .. v6}, Lcom/android/server/am/ActivityManagerService;->setProfileApp(Landroid/content/pm/ApplicationInfo;Ljava/lang/String;Ljava/lang/String;Landroid/os/ParcelFileDescriptor;Z)V
+
+    .end local v11    # "secure":Lcom/aliyun/ams/secure/SecureManager;
+    :cond_3
+    move-object v1, v7
 
     .line 703
-    :cond_2
-    return-object v6
+    :goto_3
+    return-object v1
 
     .line 644
-    .end local v6    # "aInfo":Landroid/content/pm/ActivityInfo;
-    .restart local v8    # "rInfo":Landroid/content/pm/ResolveInfo;
-    :cond_3
-    const/4 v6, 0x0
+    .end local v7    # "aInfo":Landroid/content/pm/ActivityInfo;
+    .restart local v10    # "rInfo":Landroid/content/pm/ResolveInfo;
+    :cond_4
+    const/4 v7, 0x0
 
-    goto :goto_0
+    goto/16 :goto_0
 
     .line 645
-    .end local v8    # "rInfo":Landroid/content/pm/ResolveInfo;
+    .end local v10    # "rInfo":Landroid/content/pm/ResolveInfo;
     :catch_0
-    move-exception v7
+    move-exception v8
 
     .line 646
-    .local v7, "e":Landroid/os/RemoteException;
-    const/4 v6, 0x0
+    .local v8, "e":Landroid/os/RemoteException;
+    const/4 v7, 0x0
 
-    .restart local v6    # "aInfo":Landroid/content/pm/ActivityInfo;
-    goto :goto_0
+    .restart local v7    # "aInfo":Landroid/content/pm/ActivityInfo;
+    goto/16 :goto_0
 
-    .end local v7    # "e":Landroid/os/RemoteException;
-    :cond_4
-    move v5, v3
+    .line 671
+    .end local v8    # "e":Landroid/os/RemoteException;
+    .restart local v9    # "isBlocked":Z
+    .restart local v10    # "rInfo":Landroid/content/pm/ResolveInfo;
+    .restart local v11    # "secure":Lcom/aliyun/ams/secure/SecureManager;
+    :cond_5
+    const/4 v7, 0x0
+
+    goto :goto_1
+
+    .line 673
+    .end local v10    # "rInfo":Landroid/content/pm/ResolveInfo;
+    :catch_1
+    move-exception v8
+
+    .line 674
+    .restart local v8    # "e":Landroid/os/RemoteException;
+    const/4 v7, 0x0
+
+    .line 675
+    const/4 v1, 0x0
+
+    goto :goto_3
 
     .line 697
-    goto :goto_1
+    .end local v8    # "e":Landroid/os/RemoteException;
+    .end local v9    # "isBlocked":Z
+    :cond_6
+    const/4 v6, 0x0
+
+    goto :goto_2
 .end method
 
 .method public restoreActivityResuming()Z

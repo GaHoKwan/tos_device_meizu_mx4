@@ -4529,7 +4529,7 @@
 .end method
 
 .method protected sendText(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Landroid/app/PendingIntent;Landroid/app/PendingIntent;)V
-    .locals 5
+    .locals 10
     .param p1, "destAddr"    # Ljava/lang/String;
     .param p2, "scAddr"    # Ljava/lang/String;
     .param p3, "text"    # Ljava/lang/String;
@@ -4537,75 +4537,183 @@
     .param p5, "deliveryIntent"    # Landroid/app/PendingIntent;
 
     .prologue
-    const/4 v3, 0x1
-
     .line 305
-    sget-boolean v4, Lcom/android/internal/telephony/gsm/GsmSMSDispatcher;->isDmLock:Z
+    sget-boolean v8, Lcom/android/internal/telephony/gsm/GsmSMSDispatcher;->isDmLock:Z
 
-    if-ne v4, v3, :cond_0
+    const/4 v9, 0x1
+
+    if-ne v8, v9, :cond_0
 
     .line 306
-    const-string v3, "GsmSMSDispatcher"
+    const-string v8, "GsmSMSDispatcher"
 
-    const-string v4, "DM status: lock-on"
+    const-string v9, "DM status: lock-on"
 
-    invoke-static {v3, v4}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v8, v9}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     .line 350
     :goto_0
     return-void
 
-    .line 340
+    .line 315
     :cond_0
-    if-eqz p5, :cond_1
+    invoke-static {p1}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
 
+    move-result v8
+
+    if-nez v8, :cond_3
+
+    invoke-static {p3}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
+
+    move-result v8
+
+    if-nez v8, :cond_3
+
+    .line 316
+    const-string v8, "GsmSMSDispatcher"
+
+    const-string v9, "Check if the message can be sent"
+
+    invoke-static {v8, v9}, Landroid/telephony/Rlog;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 317
+    const/4 v3, 0x0
+
+    .line 318
+    .local v3, "pkg":Ljava/lang/String;
+    if-nez p4, :cond_2
+
+    .line 319
+    iget-object v8, p0, Lcom/android/internal/telephony/gsm/GsmSMSDispatcher;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v8}, Landroid/content/Context;->getPackageManager()Landroid/content/pm/PackageManager;
+
+    move-result-object v5
+
+    .line 320
+    .local v5, "pm":Landroid/content/pm/PackageManager;
+    invoke-static {}, Landroid/os/Binder;->getCallingUid()I
+
+    move-result v8
+
+    invoke-virtual {v5, v8}, Landroid/content/pm/PackageManager;->getPackagesForUid(I)[Ljava/lang/String;
+
+    move-result-object v4
+
+    .line 321
+    .local v4, "pkgs":[Ljava/lang/String;
+    if-eqz v4, :cond_1
+
+    array-length v8, v4
+
+    if-lez v8, :cond_1
+
+    .line 322
+    const/4 v8, 0x0
+
+    aget-object v3, v4, v8
+
+    .line 328
+    .end local v4    # "pkgs":[Ljava/lang/String;
+    .end local v5    # "pm":Landroid/content/pm/PackageManager;
+    :cond_1
     :goto_1
-    invoke-static {p2, p1, p3, v3}, Lcom/android/internal/telephony/gsm/SmsMessage;->getSubmitPdu(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Lcom/android/internal/telephony/gsm/SmsMessage$SubmitPdu;
+    invoke-static {}, Lcom/aliyun/ams/secure/SecureManager;->get()Lcom/aliyun/ams/secure/SecureManager;
 
-    move-result-object v1
+    move-result-object v6
 
-    .line 342
-    .local v1, "pdu":Lcom/android/internal/telephony/gsm/SmsMessage$SubmitPdu;
-    if-eqz v1, :cond_2
+    .line 329
+    .local v6, "secure":Lcom/aliyun/ams/secure/SecureManager;
+    if-eqz v6, :cond_3
 
-    .line 343
-    invoke-virtual {p0, p1, p2, p3, v1}, Lcom/android/internal/telephony/gsm/GsmSMSDispatcher;->getSmsTrackerMap(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/android/internal/telephony/SmsMessageBase$SubmitPduBase;)Ljava/util/HashMap;
+    if-eqz v3, :cond_3
+
+    .line 330
+    invoke-static {p1, p2, p3, p4, p5}, Lcom/android/internal/telephony/gsm/GsmSMSDispatcher;->composeIntent(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Landroid/app/PendingIntent;Landroid/app/PendingIntent;)Landroid/content/Intent;
 
     move-result-object v0
 
-    .line 344
-    .local v0, "map":Ljava/util/HashMap;
-    invoke-virtual {p0}, Lcom/android/internal/telephony/gsm/GsmSMSDispatcher;->getFormat()Ljava/lang/String;
+    .line 331
+    .local v0, "intent":Landroid/content/Intent;
+    invoke-virtual {v6, v3, v0}, Lcom/aliyun/ams/secure/SecureManager;->blockSms(Ljava/lang/String;Landroid/content/Intent;)Z
+
+    move-result v8
+
+    if-eqz v8, :cond_3
+
+    .line 332
+    const-string v8, "GsmSMSDispatcher"
+
+    const-string v9, "SecureService the msg is blocked"
+
+    invoke-static {v8, v9}, Landroid/telephony/Rlog;->i(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_0
+
+    .line 325
+    .end local v0    # "intent":Landroid/content/Intent;
+    .end local v6    # "secure":Lcom/aliyun/ams/secure/SecureManager;
+    :cond_2
+    invoke-static {p4}, Lcom/android/internal/telephony/gsm/GsmSMSDispatcher;->getAppNameByIntent(Landroid/app/PendingIntent;)Ljava/lang/String;
 
     move-result-object v3
 
-    invoke-virtual {p0, v0, p4, p5, v3}, Lcom/android/internal/telephony/gsm/GsmSMSDispatcher;->getSmsTracker(Ljava/util/HashMap;Landroid/app/PendingIntent;Landroid/app/PendingIntent;Ljava/lang/String;)Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;
+    goto :goto_1
+
+    .line 340
+    .end local v3    # "pkg":Ljava/lang/String;
+    :cond_3
+    if-eqz p5, :cond_4
+
+    const/4 v8, 0x1
+
+    :goto_2
+    invoke-static {p2, p1, p3, v8}, Lcom/android/internal/telephony/gsm/SmsMessage;->getSubmitPdu(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Lcom/android/internal/telephony/gsm/SmsMessage$SubmitPdu;
 
     move-result-object v2
 
+    .line 342
+    .local v2, "pdu":Lcom/android/internal/telephony/gsm/SmsMessage$SubmitPdu;
+    if-eqz v2, :cond_5
+
+    .line 343
+    invoke-virtual {p0, p1, p2, p3, v2}, Lcom/android/internal/telephony/gsm/GsmSMSDispatcher;->getSmsTrackerMap(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/android/internal/telephony/SmsMessageBase$SubmitPduBase;)Ljava/util/HashMap;
+
+    move-result-object v1
+
+    .line 344
+    .local v1, "map":Ljava/util/HashMap;
+    invoke-virtual {p0}, Lcom/android/internal/telephony/gsm/GsmSMSDispatcher;->getFormat()Ljava/lang/String;
+
+    move-result-object v8
+
+    invoke-virtual {p0, v1, p4, p5, v8}, Lcom/android/internal/telephony/gsm/GsmSMSDispatcher;->getSmsTracker(Ljava/util/HashMap;Landroid/app/PendingIntent;Landroid/app/PendingIntent;Ljava/lang/String;)Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;
+
+    move-result-object v7
+
     .line 346
-    .local v2, "tracker":Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;
-    invoke-virtual {p0, v2}, Lcom/android/internal/telephony/gsm/GsmSMSDispatcher;->sendRawPdu(Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;)V
+    .local v7, "tracker":Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;
+    invoke-virtual {p0, v7}, Lcom/android/internal/telephony/gsm/GsmSMSDispatcher;->sendRawPdu(Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;)V
 
     goto :goto_0
 
     .line 340
-    .end local v0    # "map":Ljava/util/HashMap;
-    .end local v1    # "pdu":Lcom/android/internal/telephony/gsm/SmsMessage$SubmitPdu;
-    .end local v2    # "tracker":Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;
-    :cond_1
-    const/4 v3, 0x0
+    .end local v1    # "map":Ljava/util/HashMap;
+    .end local v2    # "pdu":Lcom/android/internal/telephony/gsm/SmsMessage$SubmitPdu;
+    .end local v7    # "tracker":Lcom/android/internal/telephony/SMSDispatcher$SmsTracker;
+    :cond_4
+    const/4 v8, 0x0
 
-    goto :goto_1
+    goto :goto_2
 
     .line 348
-    .restart local v1    # "pdu":Lcom/android/internal/telephony/gsm/SmsMessage$SubmitPdu;
-    :cond_2
-    const-string v3, "GsmSMSDispatcher"
+    .restart local v2    # "pdu":Lcom/android/internal/telephony/gsm/SmsMessage$SubmitPdu;
+    :cond_5
+    const-string v8, "GsmSMSDispatcher"
 
-    const-string v4, "GsmSMSDispatcher.sendText(): getSubmitPdu() returned null"
+    const-string v9, "GsmSMSDispatcher.sendText(): getSubmitPdu() returned null"
 
-    invoke-static {v3, v4}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v8, v9}, Landroid/telephony/Rlog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
     goto :goto_0
 .end method
