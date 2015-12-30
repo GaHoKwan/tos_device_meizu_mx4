@@ -1,0 +1,16 @@
+#!/system/bin/sh
+
+count=`cat /data/system/count`
+PRELOAD_APP_DIR=/system/third-app
+
+mount -o remount,rw /system
+
+for file in `ls $PRELOAD_APP_DIR`; do
+	if [ "$count" == "1" ]; then
+		sleep 15
+		pm install -r $PRELOAD_APP_DIR/$file	
+	elif [ "$count" == "5" ]; then
+		sleep 15
+		pm install -r $PRELOAD_APP_DIR/$file
+	fi
+done
